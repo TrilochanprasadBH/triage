@@ -54,7 +54,7 @@ python stages/01_classify/test_stage01.py
 | stage | capability | measure | result |
 | --- | --- | --- | --- |
 | 01 | intent classification | macro-F1, dev and held out | baseline 0.785 / 0.776; reference 1.000 / 1.000 |
-| 02 | policy retrieval | recall@3 | not yet measured |
+| 02 | policy retrieval | recall@3, intent coherence | baseline 71.6%/31.9%; reference **100%/75.7%** |
 | 03 | drafting | policy compliance rate | not yet measured |
 | 04 | actions and approval | unauthorised actions | not yet measured |
 | 05 | audit trail | replay fidelity | not yet measured |
@@ -62,7 +62,8 @@ python stages/01_classify/test_stage01.py
 | 07 | release safety | canary detection rate | not yet measured |
 
 Read the stage 01 note before trusting the 1.000. It is an artefact of how the reference
-was written, and the lesson says so.
+was written, and the lesson says so. Stage 02's 100% recall@3 is on a 24-section corpus,
+which is a small search space by design.
 
 ## Layout
 

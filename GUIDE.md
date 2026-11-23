@@ -26,7 +26,7 @@ close it and rewrite your version from memory.
 | stage | you build | the idea it teaches | ends with |
 | --- | --- | --- | --- |
 | 01 | intent classifier | classification is evidence accumulation, not first match | macro-F1 0.90 on dev, measured on held out |
-| 02 | policy retrieval | a decision needs a citation to the rule it follows | recall@3 for policy passages |
+| 02 | policy retrieval | a decision needs a citation to the rule it follows | recall@3 100%, coherence 76% |
 | 03 | reply drafting | a draft is a claim, and claims have compliance rules | compliance rate measured against forbidden content |
 | 04 | actions and approval | the model may request; only a human may approve | zero unauthorised actions |
 | 05 | audit trail | if it cannot be replayed, it did not happen | replay reproduces every decision |
@@ -38,8 +38,9 @@ close it and rewrite your version from memory.
 **After 01:** "Macro-F1 is 0.91 on dev and I report the held-out number separately,
 because a rule set tuned on one split is not a classifier."
 
-**After 02:** "Every decision cites a policy passage, and I measured retrieval for policy
-separately from classification, because they fail independently."
+**After 02:** "Every decision cites a policy passage. The intent I already knew was worth
+nineteen points of recall@3 as a metadata prior, and it never became a hard filter because
+my classifier is not perfect."
 
 **After 03:** "A draft is checked against forbidden content, and I report compliance and
 coverage separately: a reply that refuses everything is compliant and useless."
