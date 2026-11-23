@@ -28,7 +28,7 @@ close it and rewrite your version from memory.
 | 01 | intent classifier | classification is evidence accumulation, not first match | macro-F1 0.785 baseline → 1.000 reference, both splits |
 | 02 | policy retrieval | a decision needs a citation to the rule it follows | recall@3 100%, coherence 76% |
 | 03 | reply drafting | a draft is a claim, and claims have compliance rules | 100% compliant, 64.7% specific, ceiling 88% |
-| 04 | actions and approval | the model may request; only a human may approve | zero unauthorised actions |
+| 04 | actions and approval | the model may request; only a human may approve | 100% correct proposals, zero unauthorised |
 | 05 | audit trail | if it cannot be replayed, it did not happen | replay reproduces every decision |
 | 06 | trajectory eval | score the process, not only the answer | agreement with a hidden rubric |
 | 07 | release safety | a canary is how a bad prompt is caught on 1% instead of 100% | regression detected in the canary |
@@ -45,8 +45,9 @@ my classifier is not perfect."
 **After 03:** "Compliance is guaranteed in code. Specificity is 64.7% against a retrieval
 ceiling of 88%, so I know the next hour belongs in retrieval, not in templates."
 
-**After 04:** "Refunds and deletions require approval from outside the model. The model
-asks; the code decides."
+**After 04:** "Refunds and cancellations require approval from outside the model. My
+baseline was 100% safe and 19% correct, which is why safety and quality are separate
+numbers."
 
 **After 05:** "Given a trace id I can replay the run and get the same decision, which is
 what makes an incident reviewable."
