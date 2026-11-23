@@ -58,21 +58,21 @@ The length floor matters. Two or three characters match far too much: "ord" woul
 
 74 tickets, 24 sections, gold label is "a section tagged with the ticket's intent".
 
-| configuration | recall@3 | intent coherence |
-| --- | --- | --- |
-| baseline: shared words, no idf, no intent | 71.6% | 31.9% |
-| text only: BM25 + prefix matching, no intent | 81.0% | 36.7% |
-| **intent prior (3.0) + BM25 + prefixes** | **100%** | **75.7%** |
+| configuration | intent recall@3 | coherence | specific rule@1 | specific rule@3 |
+| --- | --- | --- | --- | --- |
+| baseline: shared words, no idf, no intent | 71.6% | 31.9% | 31.1% | 48.6% |
+| text only: BM25 + prefixes + titles, no intent | 82.0% | 38.1% | 43.2% | — |
+| **intent prior (3.0) + BM25 + prefixes** | **100%** | **73.9%** | **56.8%** | **85.1%** |
 
 And the sweep on the boost, which is the interesting part:
 
-| boost | recall@3 | coherence |
-| --- | --- | --- |
-| 0.0 | 81% | 36.7% |
-| 1.5 | 93% | 55.0% |
-| 3.0 (default) | 100% | 75.7% |
-| 6.0 | 100% | 87.2% |
-| 12.0 | 100% | 91.7% |
+| boost | intent recall@3 | coherence | specific rule@1 |
+| --- | --- | --- | --- |
+| 0.0 | 82% | 38.1% | 43.2% |
+| 1.5 | 93% | 53.7% | 51.4% |
+| 3.0 (default) | 100% | 73.9% | 56.8% |
+| 6.0 | 100% | 86.7% | 59.5% |
+| 12.0 | 100% | 91.7% | 59.5% |
 
 Three things to notice.
 
@@ -86,6 +86,12 @@ model cannot quote the wrong rule) and bad if your classifier is wrong.
 **Coherence never reaches 100%.** Some messages contain no vocabulary from their own
 intent, so the only sections that score at all are from another domain. That is a property
 of the corpus, and it is why the boost stays a prior rather than becoming a filter.
+
+**Intent recall of 100% is a coarse claim, and the last two columns show it.** The right
+*domain* is retrieved every time; the right *specific rule* is at rank 1 only 56.8% of the
+time, and in the top three 85.1%. That distinction matters immediately in stage 03: a
+drafter can only quote a rule that was retrieved, so 85.1% is the ceiling for draft
+specificity. Reporting only the intent number would have hidden the actual constraint.
 
 ## Do this
 

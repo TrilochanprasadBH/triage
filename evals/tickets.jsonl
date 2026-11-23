@@ -1,74 +1,74 @@
-{"id": "t001", "channel": "email", "message": "I was charged twice for order 8712, please refund the duplicate.", "intent": "refund", "split": "dev"}
-{"id": "t002", "channel": "chat", "message": "Can I get my money back for order 4410? The item arrived broken.", "intent": "refund", "split": "dev"}
-{"id": "t003", "channel": "email", "message": "Refund not received after ten days. Where is it?", "intent": "refund", "split": "test"}
-{"id": "t004", "channel": "chat", "message": "I would like a refund for the annual plan, I barely used it.", "intent": "refund", "split": "dev"}
-{"id": "t005", "channel": "email", "message": "You charged me after I cancelled. Refund it now.", "intent": "refund", "split": "dev"}
-{"id": "t006", "channel": "email", "message": "Requesting reimbursement for the damaged parcel on 2277.", "intent": "refund", "split": "test"}
-{"id": "t007", "channel": "chat", "message": "Please reverse the payment for order 9000, it was a mistake.", "intent": "refund", "split": "dev"}
-{"id": "t008", "channel": "email", "message": "I want my money back. The product does not work at all.", "intent": "refund", "split": "dev"}
-{"id": "t009", "channel": "email", "message": "Refund request: the wrong item was delivered.", "intent": "refund", "split": "test"}
-{"id": "t010", "channel": "chat", "message": "Can you refund the difference? I bought it yesterday and it is discounted today.", "intent": "refund", "split": "dev"}
-{"id": "t011", "channel": "chat", "message": "Where is my order? Tracking has not updated in four days.", "intent": "shipping", "split": "dev"}
-{"id": "t012", "channel": "email", "message": "The parcel has not arrived after two weeks.", "intent": "shipping", "split": "dev"}
-{"id": "t013", "channel": "chat", "message": "Delivery was supposed to be Tuesday and nobody came.", "intent": "shipping", "split": "test"}
-{"id": "t014", "channel": "email", "message": "My tracking number does not work on your site.", "intent": "shipping", "split": "dev"}
-{"id": "t015", "channel": "chat", "message": "My package is stuck in transit at the depot.", "intent": "shipping", "split": "dev"}
-{"id": "t016", "channel": "email", "message": "Order 2277 never showed up and support has not replied.", "intent": "shipping", "split": "test"}
-{"id": "t017", "channel": "chat", "message": "Can you change the delivery address before it goes out?", "intent": "shipping", "split": "dev"}
-{"id": "t018", "channel": "email", "message": "The courier left the box at the wrong door.", "intent": "shipping", "split": "dev"}
-{"id": "t019", "channel": "chat", "message": "When will my shipment arrive? It has been sitting for days.", "intent": "shipping", "split": "test"}
-{"id": "t020", "channel": "email", "message": "Tracking says delivered but I never received the package.", "intent": "shipping", "split": "dev"}
-{"id": "t021", "channel": "email", "message": "My invoice shows the wrong amount for order 4410.", "intent": "billing", "split": "dev"}
-{"id": "t022", "channel": "chat", "message": "Why was I charged tax twice on the same invoice?", "intent": "billing", "split": "dev"}
-{"id": "t023", "channel": "email", "message": "I need to update the card on file before the renewal.", "intent": "billing", "split": "test"}
-{"id": "t024", "channel": "email", "message": "Please send a VAT invoice for order 9000.", "intent": "billing", "split": "dev"}
-{"id": "t025", "channel": "chat", "message": "The price changed after checkout and I was charged the new one.", "intent": "billing", "split": "dev"}
-{"id": "t026", "channel": "email", "message": "Can I get a receipt for last month's payment?", "intent": "billing", "split": "test"}
-{"id": "t027", "channel": "chat", "message": "My billing address is out of date and the invoice bounced.", "intent": "billing", "split": "dev"}
-{"id": "t028", "channel": "email", "message": "I was charged in the wrong currency.", "intent": "billing", "split": "dev"}
-{"id": "t029", "channel": "email", "message": "My subscription renewed a week earlier than the renewal date.", "intent": "billing", "split": "test"}
-{"id": "t030", "channel": "chat", "message": "Invoice 4410 does not match the quote you sent me.", "intent": "billing", "split": "dev"}
-{"id": "t031", "channel": "chat", "message": "I cannot log in and the password reset is not working.", "intent": "account", "split": "dev"}
-{"id": "t032", "channel": "email", "message": "Please change the email address on my account.", "intent": "account", "split": "dev"}
-{"id": "t033", "channel": "chat", "message": "Two-factor codes never arrive on my phone.", "intent": "account", "split": "test"}
-{"id": "t034", "channel": "email", "message": "I need to update the phone number for verification.", "intent": "account", "split": "dev"}
-{"id": "t035", "channel": "chat", "message": "My account is locked after too many attempts.", "intent": "account", "split": "dev"}
-{"id": "t036", "channel": "email", "message": "How do I enable two-factor authentication?", "intent": "account", "split": "test"}
-{"id": "t037", "channel": "chat", "message": "Please delete the saved addresses on my profile.", "intent": "account", "split": "dev"}
-{"id": "t038", "channel": "email", "message": "I forgot my username and the recovery form fails.", "intent": "account", "split": "dev"}
-{"id": "t039", "channel": "chat", "message": "My profile shows someone else's name on the account.", "intent": "account", "split": "test"}
-{"id": "t040", "channel": "email", "message": "I cannot verify my email, the link expires instantly.", "intent": "account", "split": "dev"}
-{"id": "t041", "channel": "chat", "message": "Cancel my subscription please.", "intent": "cancel", "split": "dev"}
-{"id": "t042", "channel": "email", "message": "I want to close my account and stop all billing.", "intent": "cancel", "split": "dev"}
-{"id": "t043", "channel": "email", "message": "Do not renew next month, I am leaving.", "intent": "cancel", "split": "test"}
-{"id": "t044", "channel": "chat", "message": "How do I cancel the annual plan?", "intent": "cancel", "split": "dev"}
-{"id": "t045", "channel": "email", "message": "Please cancel order 8713 before it ships.", "intent": "cancel", "split": "dev"}
-{"id": "t046", "channel": "chat", "message": "End my subscription immediately, effective today.", "intent": "cancel", "split": "test"}
-{"id": "t047", "channel": "email", "message": "Cancelling because of the price increase.", "intent": "cancel", "split": "dev"}
-{"id": "t048", "channel": "email", "message": "Remove my account and all data under the privacy rules.", "intent": "cancel", "split": "dev"}
-{"id": "t049", "channel": "chat", "message": "Turn off auto-renew on my plan.", "intent": "cancel", "split": "test"}
-{"id": "t050", "channel": "email", "message": "I want to stop the monthly billing entirely.", "intent": "cancel", "split": "dev"}
-{"id": "t051", "channel": "chat", "message": "Do you have a public API?", "intent": "other", "split": "dev"}
-{"id": "t052", "channel": "email", "message": "Is there a student discount available?", "intent": "other", "split": "dev"}
-{"id": "t053", "channel": "chat", "message": "Where are your offices located?", "intent": "other", "split": "test"}
-{"id": "t054", "channel": "email", "message": "Do you support Arabic in the interface?", "intent": "other", "split": "dev"}
-{"id": "t055", "channel": "chat", "message": "Can I export my data to CSV?", "intent": "other", "split": "dev"}
-{"id": "t056", "channel": "email", "message": "What is your uptime guarantee?", "intent": "other", "split": "test"}
-{"id": "t057", "channel": "chat", "message": "Are you hiring engineers?", "intent": "other", "split": "dev"}
-{"id": "t058", "channel": "email", "message": "Do you offer nonprofit pricing?", "intent": "other", "split": "dev"}
-{"id": "t059", "channel": "chat", "message": "How do I become a partner?", "intent": "other", "split": "test"}
-{"id": "t060", "channel": "email", "message": "Is there a mobile app for iOS?", "intent": "other", "split": "dev"}
-{"id": "t061", "channel": "email", "message": "I cancelled the order but was still charged, please sort it out.", "intent": "refund", "split": "dev"}
-{"id": "t062", "channel": "chat", "message": "The refund went to the wrong card, please fix the billing details.", "intent": "billing", "split": "dev"}
-{"id": "t063", "channel": "email", "message": "Cancel the refund, I will keep the item after all.", "intent": "cancel", "split": "dev"}
-{"id": "t064", "channel": "chat", "message": "My account was charged for a plan I cancelled in March.", "intent": "refund", "split": "test"}
-{"id": "t065", "channel": "email", "message": "Can I cancel and get a refund for the remaining months?", "intent": "refund", "split": "dev"}
-{"id": "t066", "channel": "chat", "message": "Where is the invoice for the order I cancelled?", "intent": "billing", "split": "test"}
-{"id": "t067", "channel": "email", "message": "I need my password reset because I changed my email address.", "intent": "account", "split": "dev"}
-{"id": "t068", "channel": "chat", "message": "The delivery arrived but the box was empty, I want my money back.", "intent": "refund", "split": "dev"}
-{"id": "t069", "channel": "email", "message": "Stop sending me invoices, I closed my account last week.", "intent": "cancel", "split": "test"}
-{"id": "t070", "channel": "chat", "message": "My card was declined and now the shipment is on hold.", "intent": "billing", "split": "dev"}
-{"id": "t071", "channel": "email", "message": "The tracking link shows delivered but support says it is in transit.", "intent": "shipping", "split": "dev"}
-{"id": "t072", "channel": "chat", "message": "Please update the billing email and resend the receipt.", "intent": "billing", "split": "dev"}
-{"id": "t073", "channel": "email", "message": "I want to end the subscription but keep my data export.", "intent": "cancel", "split": "dev"}
-{"id": "t074", "channel": "email", "message": "Two charges for the same order, one of them after I cancelled.", "intent": "refund", "split": "test"}
+{"id": "t001", "channel": "email", "message": "I was charged twice for order 8712, please refund the duplicate.", "intent": "refund", "split": "dev", "gold_section": "r2"}
+{"id": "t002", "channel": "chat", "message": "Can I get my money back for order 4410? The item arrived broken.", "intent": "refund", "split": "dev", "gold_section": "r3"}
+{"id": "t003", "channel": "email", "message": "Refund not received after ten days. Where is it?", "intent": "refund", "split": "test", "gold_section": "r1"}
+{"id": "t004", "channel": "chat", "message": "I would like a refund for the annual plan, I barely used it.", "intent": "refund", "split": "dev", "gold_section": "r1"}
+{"id": "t005", "channel": "email", "message": "You charged me after I cancelled. Refund it now.", "intent": "refund", "split": "dev", "gold_section": "r1"}
+{"id": "t006", "channel": "email", "message": "Requesting reimbursement for the damaged parcel on 2277.", "intent": "refund", "split": "test", "gold_section": "r3"}
+{"id": "t007", "channel": "chat", "message": "Please reverse the payment for order 9000, it was a mistake.", "intent": "refund", "split": "dev", "gold_section": "r1"}
+{"id": "t008", "channel": "email", "message": "I want my money back. The product does not work at all.", "intent": "refund", "split": "dev", "gold_section": "r1"}
+{"id": "t009", "channel": "email", "message": "Refund request: the wrong item was delivered.", "intent": "refund", "split": "test", "gold_section": "r1"}
+{"id": "t010", "channel": "chat", "message": "Can you refund the difference? I bought it yesterday and it is discounted today.", "intent": "refund", "split": "dev", "gold_section": "r4"}
+{"id": "t011", "channel": "chat", "message": "Where is my order? Tracking has not updated in four days.", "intent": "shipping", "split": "dev", "gold_section": "s1"}
+{"id": "t012", "channel": "email", "message": "The parcel has not arrived after two weeks.", "intent": "shipping", "split": "dev", "gold_section": "s2"}
+{"id": "t013", "channel": "chat", "message": "Delivery was supposed to be Tuesday and nobody came.", "intent": "shipping", "split": "test", "gold_section": "s4"}
+{"id": "t014", "channel": "email", "message": "My tracking number does not work on your site.", "intent": "shipping", "split": "dev", "gold_section": "s1"}
+{"id": "t015", "channel": "chat", "message": "My package is stuck in transit at the depot.", "intent": "shipping", "split": "dev", "gold_section": "s1"}
+{"id": "t016", "channel": "email", "message": "Order 2277 never showed up and support has not replied.", "intent": "shipping", "split": "test", "gold_section": "s2"}
+{"id": "t017", "channel": "chat", "message": "Can you change the delivery address before it goes out?", "intent": "shipping", "split": "dev", "gold_section": "s3"}
+{"id": "t018", "channel": "email", "message": "The courier left the box at the wrong door.", "intent": "shipping", "split": "dev", "gold_section": "s3"}
+{"id": "t019", "channel": "chat", "message": "When will my shipment arrive? It has been sitting for days.", "intent": "shipping", "split": "test", "gold_section": "s4"}
+{"id": "t020", "channel": "email", "message": "Tracking says delivered but I never received the package.", "intent": "shipping", "split": "dev", "gold_section": "s1"}
+{"id": "t021", "channel": "email", "message": "My invoice shows the wrong amount for order 4410.", "intent": "billing", "split": "dev", "gold_section": "b1"}
+{"id": "t022", "channel": "chat", "message": "Why was I charged tax twice on the same invoice?", "intent": "billing", "split": "dev", "gold_section": "b1"}
+{"id": "t023", "channel": "email", "message": "I need to update the card on file before the renewal.", "intent": "billing", "split": "test", "gold_section": "b3"}
+{"id": "t024", "channel": "email", "message": "Please send a VAT invoice for order 9000.", "intent": "billing", "split": "dev", "gold_section": "b1"}
+{"id": "t025", "channel": "chat", "message": "The price changed after checkout and I was charged the new one.", "intent": "billing", "split": "dev", "gold_section": "b1"}
+{"id": "t026", "channel": "email", "message": "Can I get a receipt for last month's payment?", "intent": "billing", "split": "test", "gold_section": "b2"}
+{"id": "t027", "channel": "chat", "message": "My billing address is out of date and the invoice bounced.", "intent": "billing", "split": "dev", "gold_section": "b1"}
+{"id": "t028", "channel": "email", "message": "I was charged in the wrong currency.", "intent": "billing", "split": "dev", "gold_section": "b4"}
+{"id": "t029", "channel": "email", "message": "My subscription renewed a week earlier than the renewal date.", "intent": "billing", "split": "test", "gold_section": "c3"}
+{"id": "t030", "channel": "chat", "message": "Invoice 4410 does not match the quote you sent me.", "intent": "billing", "split": "dev", "gold_section": "b1"}
+{"id": "t031", "channel": "chat", "message": "I cannot log in and the password reset is not working.", "intent": "account", "split": "dev", "gold_section": "a1"}
+{"id": "t032", "channel": "email", "message": "Please change the email address on my account.", "intent": "account", "split": "dev", "gold_section": "a2"}
+{"id": "t033", "channel": "chat", "message": "Two-factor codes never arrive on my phone.", "intent": "account", "split": "test", "gold_section": "a3"}
+{"id": "t034", "channel": "email", "message": "I need to update the phone number for verification.", "intent": "account", "split": "dev", "gold_section": "a2"}
+{"id": "t035", "channel": "chat", "message": "My account is locked after too many attempts.", "intent": "account", "split": "dev", "gold_section": "a4"}
+{"id": "t036", "channel": "email", "message": "How do I enable two-factor authentication?", "intent": "account", "split": "test", "gold_section": "a3"}
+{"id": "t037", "channel": "chat", "message": "Please delete the saved addresses on my profile.", "intent": "account", "split": "dev", "gold_section": "c2"}
+{"id": "t038", "channel": "email", "message": "I forgot my username and the recovery form fails.", "intent": "account", "split": "dev", "gold_section": "a1"}
+{"id": "t039", "channel": "chat", "message": "My profile shows someone else's name on the account.", "intent": "account", "split": "test", "gold_section": "a2"}
+{"id": "t040", "channel": "email", "message": "I cannot verify my email, the link expires instantly.", "intent": "account", "split": "dev", "gold_section": "a2"}
+{"id": "t041", "channel": "chat", "message": "Cancel my subscription please.", "intent": "cancel", "split": "dev", "gold_section": "c1"}
+{"id": "t042", "channel": "email", "message": "I want to close my account and stop all billing.", "intent": "cancel", "split": "dev", "gold_section": "c2"}
+{"id": "t043", "channel": "email", "message": "Do not renew next month, I am leaving.", "intent": "cancel", "split": "test", "gold_section": "c3"}
+{"id": "t044", "channel": "chat", "message": "How do I cancel the annual plan?", "intent": "cancel", "split": "dev", "gold_section": "c1"}
+{"id": "t045", "channel": "email", "message": "Please cancel order 8713 before it ships.", "intent": "cancel", "split": "dev", "gold_section": "c4"}
+{"id": "t046", "channel": "chat", "message": "End my subscription immediately, effective today.", "intent": "cancel", "split": "test", "gold_section": "c1"}
+{"id": "t047", "channel": "email", "message": "Cancelling because of the price increase.", "intent": "cancel", "split": "dev", "gold_section": "c1"}
+{"id": "t048", "channel": "email", "message": "Remove my account and all data under the privacy rules.", "intent": "cancel", "split": "dev", "gold_section": "c2"}
+{"id": "t049", "channel": "chat", "message": "Turn off auto-renew on my plan.", "intent": "cancel", "split": "test", "gold_section": "c3"}
+{"id": "t050", "channel": "email", "message": "I want to stop the monthly billing entirely.", "intent": "cancel", "split": "dev", "gold_section": "c1"}
+{"id": "t051", "channel": "chat", "message": "Do you have a public API?", "intent": "other", "split": "dev", "gold_section": "o1"}
+{"id": "t052", "channel": "email", "message": "Is there a student discount available?", "intent": "other", "split": "dev", "gold_section": "o2"}
+{"id": "t053", "channel": "chat", "message": "Where are your offices located?", "intent": "other", "split": "test", "gold_section": "o3"}
+{"id": "t054", "channel": "email", "message": "Do you support Arabic in the interface?", "intent": "other", "split": "dev", "gold_section": "o4"}
+{"id": "t055", "channel": "chat", "message": "Can I export my data to CSV?", "intent": "other", "split": "dev", "gold_section": "o4"}
+{"id": "t056", "channel": "email", "message": "What is your uptime guarantee?", "intent": "other", "split": "test", "gold_section": "o4"}
+{"id": "t057", "channel": "chat", "message": "Are you hiring engineers?", "intent": "other", "split": "dev", "gold_section": "o3"}
+{"id": "t058", "channel": "email", "message": "Do you offer nonprofit pricing?", "intent": "other", "split": "dev", "gold_section": "o2"}
+{"id": "t059", "channel": "chat", "message": "How do I become a partner?", "intent": "other", "split": "test", "gold_section": "o3"}
+{"id": "t060", "channel": "email", "message": "Is there a mobile app for iOS?", "intent": "other", "split": "dev", "gold_section": "o4"}
+{"id": "t061", "channel": "email", "message": "I cancelled the order but was still charged, please sort it out.", "intent": "refund", "split": "dev", "gold_section": "r1"}
+{"id": "t062", "channel": "chat", "message": "The refund went to the wrong card, please fix the billing details.", "intent": "billing", "split": "dev", "gold_section": "b3"}
+{"id": "t063", "channel": "email", "message": "Cancel the refund, I will keep the item after all.", "intent": "cancel", "split": "dev", "gold_section": "c4"}
+{"id": "t064", "channel": "chat", "message": "My account was charged for a plan I cancelled in March.", "intent": "refund", "split": "test", "gold_section": "r1"}
+{"id": "t065", "channel": "email", "message": "Can I cancel and get a refund for the remaining months?", "intent": "refund", "split": "dev", "gold_section": "r1"}
+{"id": "t066", "channel": "chat", "message": "Where is the invoice for the order I cancelled?", "intent": "billing", "split": "test", "gold_section": "b1"}
+{"id": "t067", "channel": "email", "message": "I need my password reset because I changed my email address.", "intent": "account", "split": "dev", "gold_section": "a1"}
+{"id": "t068", "channel": "chat", "message": "The delivery arrived but the box was empty, I want my money back.", "intent": "refund", "split": "dev", "gold_section": "r3"}
+{"id": "t069", "channel": "email", "message": "Stop sending me invoices, I closed my account last week.", "intent": "cancel", "split": "test", "gold_section": "c1"}
+{"id": "t070", "channel": "chat", "message": "My card was declined and now the shipment is on hold.", "intent": "billing", "split": "dev", "gold_section": "b3"}
+{"id": "t071", "channel": "email", "message": "The tracking link shows delivered but support says it is in transit.", "intent": "shipping", "split": "dev", "gold_section": "s1"}
+{"id": "t072", "channel": "chat", "message": "Please update the billing email and resend the receipt.", "intent": "billing", "split": "dev", "gold_section": "b2"}
+{"id": "t073", "channel": "email", "message": "I want to end the subscription but keep my data export.", "intent": "cancel", "split": "dev", "gold_section": "c3"}
+{"id": "t074", "channel": "email", "message": "Two charges for the same order, one of them after I cancelled.", "intent": "refund", "split": "test", "gold_section": "r2"}

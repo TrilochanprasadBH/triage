@@ -43,21 +43,33 @@ def evaluate(name, retrieve, tickets, sections):
     hits = 0
     coherent = 0
     returned = 0
+    section_top1 = 0
+    section_top3 = 0
+    comparable = 0
     errors = []
     for ticket in tickets:
         results = retrieve(ticket)
         ids = {section.id for section, _ in results}
+        ordered = [section.id for section, _ in results]
         gold = {section.id for section in sections if section.intent == ticket.intent}
         if ids & gold:
             hits += 1
         else:
-            errors.append((ticket, [section.id for section, _ in results]))
+            errors.append((ticket, ordered))
         coherent += sum(1 for section, _ in results if section.intent == ticket.intent)
         returned += len(results)
+
+        if ticket.gold_section:
+            comparable += 1
+            section_top1 += bool(ordered) and ordered[0] == ticket.gold_section
+            section_top3 += ticket.gold_section in ordered
+
     return {
         "name": name,
         "recall": hits / len(tickets),
         "coherence": coherent / returned if returned else 0.0,
+        "section_top1": section_top1 / comparable if comparable else 0.0,
+        "section_top3": section_top3 / comparable if comparable else 0.0,
         "errors": errors,
     }
 
@@ -84,8 +96,10 @@ def main() -> int:
         result = evaluate(name, retrieve, tickets, sections)
         low, high = wilson_interval(round(result["recall"] * len(tickets)), len(tickets))
         print(f" {name}")
-        print(f"   recall@3       {result['recall']:.1%}  (95% CI {low:.0%}–{high:.0%})")
-        print(f"   intent coherence {result['coherence']:.1%}")
+        print(f"   intent recall@3   {result['recall']:.1%}  (95% CI {low:.0%}–{high:.0%})")
+        print(f"   intent coherence  {result['coherence']:.1%}")
+        print(f"   specific rule@1   {result['section_top1']:.1%}")
+        print(f"   specific rule@3   {result['section_top3']:.1%}")
         if result["errors"] and args.show_errors:
             for ticket, ids in result["errors"][: args.show_errors]:
                 print(f"     miss {ticket.id} intent={ticket.intent:<9} got {ids}")

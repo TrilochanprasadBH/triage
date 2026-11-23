@@ -29,6 +29,7 @@ from .tickets import Ticket
 TOKEN = re.compile(r"[a-z0-9]+")
 INTENT_BOOST = 3.0
 PREFIX_MIN = 5
+TITLE_WEIGHT = 3
 K1 = 1.5
 B = 0.75
 
@@ -45,10 +46,14 @@ class PolicyIndex:
         self.df: Counter = Counter()
 
         for section in self.sections:
-            tokens = tokenize(f"{section.title} {section.text}")
+            # The title is the rule's name, so it is worth more than the body. Inflating
+            # its term frequency is the cheapest way to say that without a second index.
+            tokens = tokenize(section.text)
             counts = Counter(tokens)
+            for term, count in Counter(tokenize(section.title)).items():
+                counts[term] += count * TITLE_WEIGHT
             self.counts[section.id] = counts
-            self.lengths[section.id] = len(tokens)
+            self.lengths[section.id] = len(tokens) + TITLE_WEIGHT * len(tokenize(section.title))
             for term in counts:
                 self.df[term] += 1
 

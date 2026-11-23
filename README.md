@@ -55,7 +55,7 @@ python stages/01_classify/test_stage01.py
 | --- | --- | --- | --- |
 | 01 | intent classification | macro-F1, dev and held out | baseline 0.785 / 0.776; reference 1.000 / 1.000 |
 | 02 | policy retrieval | recall@3, intent coherence | baseline 71.6%/31.9%; reference **100%/75.7%** |
-| 03 | drafting | policy compliance rate | not yet measured |
+| 03 | drafting | specificity, compliance, focus | **63.5%** specific, 100% compliant, 100% focused |
 | 04 | actions and approval | unauthorised actions | not yet measured |
 | 05 | audit trail | replay fidelity | not yet measured |
 | 06 | trajectory eval | rubric agreement | not yet measured |

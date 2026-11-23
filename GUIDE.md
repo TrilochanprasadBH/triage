@@ -27,7 +27,7 @@ close it and rewrite your version from memory.
 | --- | --- | --- | --- |
 | 01 | intent classifier | classification is evidence accumulation, not first match | macro-F1 0.90 on dev, measured on held out |
 | 02 | policy retrieval | a decision needs a citation to the rule it follows | recall@3 100%, coherence 76% |
-| 03 | reply drafting | a draft is a claim, and claims have compliance rules | compliance rate measured against forbidden content |
+| 03 | reply drafting | a draft is a claim, and claims have compliance rules | 100% compliant, 63.5% specific, ceiling 85% |
 | 04 | actions and approval | the model may request; only a human may approve | zero unauthorised actions |
 | 05 | audit trail | if it cannot be replayed, it did not happen | replay reproduces every decision |
 | 06 | trajectory eval | score the process, not only the answer | agreement with a hidden rubric |
@@ -42,8 +42,8 @@ because a rule set tuned on one split is not a classifier."
 nineteen points of recall@3 as a metadata prior, and it never became a hard filter because
 my classifier is not perfect."
 
-**After 03:** "A draft is checked against forbidden content, and I report compliance and
-coverage separately: a reply that refuses everything is compliant and useless."
+**After 03:** "Compliance and focus are guaranteed in code. Specificity is 63.5% against a
+retrieval ceiling of 85%, so I know the next hour belongs in retrieval, not in templates."
 
 **After 04:** "Refunds and deletions require approval from outside the model. The model
 asks; the code decides."

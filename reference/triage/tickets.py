@@ -20,6 +20,7 @@ class Ticket:
     message: str
     intent: str | None = None
     split: str = "dev"
+    gold_section: str | None = None
 
     def __post_init__(self) -> None:
         if self.intent is not None and self.intent not in INTENTS:
@@ -39,6 +40,7 @@ def load_tickets(path: pathlib.Path) -> list[Ticket]:
             message=row["message"],
             intent=row.get("intent"),
             split=row.get("split", "dev"),
+            gold_section=row.get("gold_section"),
         )
         for row in rows
     ]
