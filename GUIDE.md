@@ -1,0 +1,78 @@
+# Guide
+
+Seven stages. Each has a lesson in `stages/NN_name/README.md` and tests that define what
+done means.
+
+Read this page once. Then work one stage at a time.
+
+---
+
+## 1. How to work
+
+For each stage:
+
+1. Read the lesson, all of it, before writing code.
+2. Run the tests and read the failures; they describe the contract.
+3. Implement in `src/triage/`.
+4. Run the tests until they pass.
+5. Run the eval, and record the number in `README.md`.
+6. Write three lines in `NOTES.md`.
+
+If you are stuck for more than 30 minutes, read `reference/`. Diff it against yours, then
+close it and rewrite your version from memory.
+
+## 2. The stages
+
+| stage | you build | the idea it teaches | ends with |
+| --- | --- | --- | --- |
+| 01 | intent classifier | classification is evidence accumulation, not first match | macro-F1 0.90 on dev, measured on held out |
+| 02 | policy retrieval | a decision needs a citation to the rule it follows | recall@3 for policy passages |
+| 03 | reply drafting | a draft is a claim, and claims have compliance rules | compliance rate measured against forbidden content |
+| 04 | actions and approval | the model may request; only a human may approve | zero unauthorised actions |
+| 05 | audit trail | if it cannot be replayed, it did not happen | replay reproduces every decision |
+| 06 | trajectory eval | score the process, not only the answer | agreement with a hidden rubric |
+| 07 | release safety | a canary is how a bad prompt is caught on 1% instead of 100% | regression detected in the canary |
+
+## 3. What you should be able to say after each stage
+
+**After 01:** "Macro-F1 is 0.91 on dev and I report the held-out number separately,
+because a rule set tuned on one split is not a classifier."
+
+**After 02:** "Every decision cites a policy passage, and I measured retrieval for policy
+separately from classification, because they fail independently."
+
+**After 03:** "A draft is checked against forbidden content, and I report compliance and
+coverage separately: a reply that refuses everything is compliant and useless."
+
+**After 04:** "Refunds and deletions require approval from outside the model. The model
+asks; the code decides."
+
+**After 05:** "Given a trace id I can replay the run and get the same decision, which is
+what makes an incident reviewable."
+
+**After 06:** "Trajectory scoring has a precedence order: safety overrides, outcome
+scores, process penalises, floor at zero."
+
+**After 07:** "A canary on 5% of traffic caught the regression before it reached everyone,
+and the rollback is one config value."
+
+## 4. The rules
+
+**Never tune on the held-out split.** The report shows development errors only, on
+purpose. If you look at held-out failures and adjust, the number stops being a test.
+
+**Never let the model authorise an action.** Confirmation comes from a human, or from a
+policy that a human wrote, never from the model's own output.
+
+**Prefer the boring mechanism.** A decision list you can read beats a model you cannot
+explain, until it measurably does not. Stage 01 is that comparison.
+
+**Measure both errors.** Blocking a good action and allowing a bad one cost different
+things; report them separately.
+
+## 5. When you finish
+
+You will have a support agent that classifies, cites policy, drafts, gates its actions,
+logs every step, scores whole runs, and ships behind a canary. That is the second
+portfolio piece, and it answers the part of the interview that `ragkit` cannot: what
+happens when the system is allowed to *do* something.
