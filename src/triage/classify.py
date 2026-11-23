@@ -24,8 +24,7 @@ def classify(ticket: Ticket) -> str:
       - do not read `ticket.intent`; that field is the answer key and is absent in
         production
 
-    The baseline in `baselines.py` is a first-match keyword scan and it scores about
-    0.72 macro-F1. Two failure modes to design against:
+    The baseline in `baselines.py` is a first-match keyword scan and it scores 0.785 macro-F1 on the development split. Two failure modes to design against:
 
       1. **Order dependence.** A message can contain words from several intents
          ("please cancel order 8713 before it ships"). Choosing the first list that

@@ -7,10 +7,9 @@ that do most of the work:
 **Specific phrases outweigh generic words.** "auto-renew" belongs to exactly one intent.
 "account" belongs to several. A phrase that can only mean one thing should count double.
 
-**Negative evidence is real.** "Not received" and "never arrived" look like shipping
-words but describe a delivery failure, which is still shipping. "Charged after I
-cancelled" is a refund request, not a cancellation, because the customer is asking for
-money back. Reading the whole message and scoring it beats matching the first token.
+**Phrase lists carry the domain vocabulary.** Each strong phrase names a situation that
+belongs to exactly one intent ("never received", "billing address", "two-factor"), so the
+lists do the work that negation logic would otherwise need.
 
 This is still a keyword model. It is deliberately simple, it is inspectable, and it is
 the right first thing to try: a rule set that scores 0.95 is easier to defend than a
@@ -58,10 +57,10 @@ STRONG = {
 WEAK = {
     "refund": ("money", "payment", "charged", "charge", "broken", "damaged"),
     "shipping": ("shipping", "package", "delivery", "deliver", "ships", "arrive",
-                 "arrived", "tracking", "order"),
+                 "arrived", "order"),
     "billing": ("billing", "charged", "charge", "price", "renewal", "tax",
                 "subscription", "card", "currency"),
-    "account": ("account", "profile", "email", "phone", "password", "verify"),
+    "account": ("account", "profile", "email", "phone", "verify"),
     "cancel": ("cancel", "cancelling", "canceled", "subscription", "leaving", "stop"),
     "other": ("support", "question"),
 }

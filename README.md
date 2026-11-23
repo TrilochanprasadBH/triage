@@ -4,8 +4,9 @@ A support agent that reads a customer message, routes it to the right policy, dr
 reply, and decides what it is allowed to do without a human.
 
 This repository is a **course and a product at the same time**. You build it in seven
-stages. At the end you have a running service with an approval gate, an audit trail, and
-a trajectory eval that scores whole agent runs rather than final answers.
+stages; three are complete. When all seven exist you have a running service with an
+approval gate, an audit trail, and a trajectory eval that scores whole agent runs rather
+than final answers.
 
 ---
 
@@ -36,34 +37,36 @@ quality.
 ## Quick start
 
 ```sh
-python scripts/status.py
+python3 scripts/status.py
 open GUIDE.md
-python stages/01_classify/test_stage01.py
+python3 stages/01_classify/test_stage01.py
 ```
 
 ## How to work in this repo
 
-- **You write code in `src/triage/`.** Every function starts with `raise
-  NotImplementedError` and a docstring stating the contract.
+- **You write code in `src/triage/`.** Three modules are stubs with contracts
+  (`classify`, `retrieval`, `compose`); everything else is given, including the baselines,
+  the checks, and the metrics.
 - **`reference/triage/` is a complete implementation.** Read it after you have tried.
 - **`stages/NN_name/` holds the lesson and the tests.** The tests are the specification.
-- `IMPL=reference python stages/01_classify/test_stage01.py` checks the reference.
+- `IMPL=reference python3 stages/01_classify/test_stage01.py` checks the reference.
 
 ## Results
 
 | stage | capability | measure | result |
 | --- | --- | --- | --- |
 | 01 | intent classification | macro-F1, dev and held out | baseline 0.785 / 0.776; reference 1.000 / 1.000 |
-| 02 | policy retrieval | recall@3, intent coherence | baseline 71.6%/31.9%; reference **100%/75.7%** |
-| 03 | drafting | specificity, compliance, focus | **63.5%** specific, 100% compliant, 100% focused |
-| 04 | actions and approval | unauthorised actions | not yet measured |
-| 05 | audit trail | replay fidelity | not yet measured |
-| 06 | trajectory eval | rubric agreement | not yet measured |
-| 07 | release safety | canary detection rate | not yet measured |
+| 02 | policy retrieval | intent recall@3, specific rule@1 | baseline 71.6%/31.9%; reference **100%**, specific rule **58.3%** (top-3 87.5%) |
+| 03 | drafting | specificity, compliance, focus | **64.7%** specific (66.7% held out), 100% compliant, 100% focused |
+| 04 | actions and approval | unauthorised actions | planned |
+| 05 | audit trail | replay fidelity | planned |
+| 06 | trajectory eval | rubric agreement | planned |
+| 07 | release safety | canary detection rate | planned |
 
 Read the stage 01 note before trusting the 1.000. It is an artefact of how the reference
-was written, and the lesson says so. Stage 02's 100% recall@3 is on a 24-section corpus,
-which is a small search space by design.
+was written, and the lesson says so. Stage 02's 100% is intent-level recall on a 24-section
+corpus, which is a small search space by design; the specific-rule column is the honest one,
+and it is the ceiling stage 03 inherits.
 
 ## Layout
 
@@ -81,6 +84,9 @@ NOTES.md            your log
 ## Data
 
 `evals/tickets.jsonl` contains 74 support messages written for this project, split 52
-development and 22 held out, across six intents. They are a teaching set, not a
-benchmark. `ragkit` stage 07 explains why 22 held-out questions cannot support a precise
-claim.
+development and 22 held out, across six intents, with a gold policy section for 72 of
+them. The corpus is authored rather than vendored, deliberately: the stages need exact,
+known ambiguities ("cancel my order" versus "cancel my subscription"), and no public
+corpus contains the ones these exercises teach. A vendored corpus is still the better
+default for text-heavy projects; see `ragkit` for that pattern. `ragkit` stage 07 also
+explains why 22 held-out questions cannot support a precise claim.

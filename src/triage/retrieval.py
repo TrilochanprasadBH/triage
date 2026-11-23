@@ -13,6 +13,13 @@ from __future__ import annotations
 from .policy import Section
 from .tickets import Ticket
 
+# The title is the rule's name, so it counts for more than the body. Weighting it in the
+# term frequencies (and in the length) lifts the specific rule to rank 1 from 52.7% to
+# 56.8% on this corpus. See the lesson's measurement table before changing it.
+TITLE_WEIGHT = 3
+INTENT_BOOST = 3.0
+PREFIX_MIN = 5
+
 
 class PolicyIndex:
     """A searchable index over policy sections."""
@@ -21,9 +28,11 @@ class PolicyIndex:
         """Index the sections.
 
         Contract:
-          - tokenise `title + text` for each section (lowercase, split on non-letters)
-          - record term frequency per section, section length, and document frequency
-          - store the average section length, for length normalisation
+          - tokenise the body (lowercase, split on non-letters)
+          - tokenise the title separately and add each term `TITLE_WEIGHT` times to the
+            body counts; the weighted length is `len(body) + TITLE_WEIGHT * len(title)`
+          - record document frequency over the weighted term set
+          - store the average weighted length, for length normalisation
         """
         raise NotImplementedError("stage 02: implement PolicyIndex.__init__")
 
@@ -36,8 +45,10 @@ class PolicyIndex:
 
         Contract:
           - score each section with BM25 over the ticket message: k1 = 1.5, b = 0.75
-          - add a boost when `section.intent == ticket.intent`, because the intent is
-            known before retrieval and a rule from another domain almost never applies
+          - if an exact term has no match and is at least `PREFIX_MIN` characters long,
+            count section terms that start with it (cancel finds cancellation)
+          - add `INTENT_BOOST` when `section.intent == ticket.intent`, because the intent
+            is known before retrieval and a rule from another domain rarely applies
           - exclude sections with a score of zero
           - break ties by section id, so results are deterministic
 

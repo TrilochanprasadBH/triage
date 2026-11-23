@@ -26,7 +26,7 @@
 {"id": "t026", "channel": "email", "message": "Can I get a receipt for last month's payment?", "intent": "billing", "split": "test", "gold_section": "b2"}
 {"id": "t027", "channel": "chat", "message": "My billing address is out of date and the invoice bounced.", "intent": "billing", "split": "dev", "gold_section": "b1"}
 {"id": "t028", "channel": "email", "message": "I was charged in the wrong currency.", "intent": "billing", "split": "dev", "gold_section": "b4"}
-{"id": "t029", "channel": "email", "message": "My subscription renewed a week earlier than the renewal date.", "intent": "billing", "split": "test", "gold_section": "c3"}
+{"id": "t029", "channel": "email", "message": "My subscription renewed a week earlier than the renewal date.", "intent": "billing", "split": "test", "gold_section": null}
 {"id": "t030", "channel": "chat", "message": "Invoice 4410 does not match the quote you sent me.", "intent": "billing", "split": "dev", "gold_section": "b1"}
 {"id": "t031", "channel": "chat", "message": "I cannot log in and the password reset is not working.", "intent": "account", "split": "dev", "gold_section": "a1"}
 {"id": "t032", "channel": "email", "message": "Please change the email address on my account.", "intent": "account", "split": "dev", "gold_section": "a2"}
@@ -34,7 +34,7 @@
 {"id": "t034", "channel": "email", "message": "I need to update the phone number for verification.", "intent": "account", "split": "dev", "gold_section": "a2"}
 {"id": "t035", "channel": "chat", "message": "My account is locked after too many attempts.", "intent": "account", "split": "dev", "gold_section": "a4"}
 {"id": "t036", "channel": "email", "message": "How do I enable two-factor authentication?", "intent": "account", "split": "test", "gold_section": "a3"}
-{"id": "t037", "channel": "chat", "message": "Please delete the saved addresses on my profile.", "intent": "account", "split": "dev", "gold_section": "c2"}
+{"id": "t037", "channel": "chat", "message": "Please delete the saved addresses on my profile.", "intent": "account", "split": "dev", "gold_section": null}
 {"id": "t038", "channel": "email", "message": "I forgot my username and the recovery form fails.", "intent": "account", "split": "dev", "gold_section": "a1"}
 {"id": "t039", "channel": "chat", "message": "My profile shows someone else's name on the account.", "intent": "account", "split": "test", "gold_section": "a2"}
 {"id": "t040", "channel": "email", "message": "I cannot verify my email, the link expires instantly.", "intent": "account", "split": "dev", "gold_section": "a2"}

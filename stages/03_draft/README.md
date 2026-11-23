@@ -1,7 +1,7 @@
 # Stage 03 — Drafting a reply
 
 ```sh
-python stages/03_draft/test_stage03.py
+python3 stages/03_draft/test_stage03.py
 ```
 
 Thirteen tests, five failing at first.
@@ -16,7 +16,8 @@ not make.
 
 ## Why this step is next
 
-Stage 01 gave you a label. Stage 02 gave you rules. Neither is a reply.
+Stage 01 gave you a label at 0.785 macro-F1, and stage 02 gave you the specific rule at rank
+one 58.3% of the time. Neither is a reply.
 
 This is also the first stage where the pipeline produces something a customer sees, which
 changes what "correct" means. A classifier can be wrong and nobody notices. A draft that
@@ -65,28 +66,53 @@ possible.
 
 74 tickets, 24 sections, gold is the specific section that governs each ticket.
 
-| | specific | rule quoted | compliant | focused |
-| --- | --- | --- | --- | --- |
-| baseline: generic reply | 0.0% | 0.0% | 100% | 100% |
-| **cited draft, dev** | **63.5%** | **63.5%** | **100%** | **100%** |
-| cited draft, held out | 63.6% | 63.6% | 100% | 100% |
+| | specific | rule quoted | compliant | focused | escalated |
+| --- | --- | --- | --- | --- | --- |
+| baseline: generic reply (dev) | 0.0% | 0.0% | 100% | 100% | 0/51 |
+| **cited draft, dev** | **64.7%** (CI 51–76) | **64.7%** | **100%** | **100%** | 0/51 |
+| cited draft, held out | 66.7% (CI 45–83) | 66.7% | 100% | 100% | 0/21 |
+
+72 of 74 tickets are scored. Two are excluded because their governing rule lives in another
+domain, and this stage forbids cross-domain citations; `evals/check_labels.py` reports the
+exclusion.
 
 Two of the four numbers are absolute and two are not, and that is the honest shape of the
 result.
 
-**Compliance and focus are 100% by construction.** The drafter only ever quotes a section
-it was given, and only from the ticket's domain. Those properties are guaranteed by the
-code, not measured hopefully.
+**Compliance is 100% by construction; focus is 100% on this corpus.** The drafter only
+quotes sections it was given, and the templates contain no banned phrase, so compliance is a
+property of the code. Focus is weaker than it looks: `choose` prefers an in-domain candidate
+but does not require one, and the draft cites exactly one section, so focus holds here only
+because retrieval always puts an in-domain candidate in the top three. At fewer than three
+results, or with a classifier that misfires, the guarantee lapses.
 
-**Specificity is 63.5%, and the ceiling is 85.1%.** That ceiling is stage 02's specific
-rule@3: the drafter can only quote a rule that was retrieved. The chooser converts 74.6% of
-the available golds into a correct citation. The remaining gap is lexical selection among
-candidates that talk about the same intent.
+**Specificity is 64.7%, against a ceiling of 88.2% on the same split.** The ceiling is
+stage 02's specific rule@3 for these 51 tickets. The chooser converts 73.3% of the golds it
+is given into a correct citation; the rest of the gap is lexical selection among candidates
+that all talk about the same intent.
+
+**Escalation is exercised 0 times.** Every ticket retrieves at least one section, so the
+escalation path is covered only by unit tests. That is a gap in the corpus, not in the code,
+and the honest fix is two or three tickets with no vocabulary in common with any policy.
 
 **Some of the misses are not errors.** "My package is stuck in transit" is labelled
 `s1` (tracking) and the system cited `s2` (lost parcels). Both are defensible readings of
 the policy. That is a labelling problem, not a system problem, and it is why real eval sets
 need adjudication rather than one person's first judgment.
+
+## Field notes
+
+From `FIELD-NOTES.md`:
+
+- **AWS's agentic lens** recommends deterministic validation of structured output and
+  explicit human escalation for ambiguous actions. The compliance list and the escalation
+  path are that instruction, implemented as code rather than as a prompt.
+- **PostHog's decision models** are the reason the drafting step is a template rather than a
+  model call: for a question with a known answer shape, a deterministic composer is cheaper,
+  testable, and impossible to talk into an overpromise.
+- Compliance as a banned-phrase list is a blunt instrument. It catches the failures this
+  corpus produces and would miss a novel overpromise. A model-based check is the next step,
+  and it belongs in an eval, not in the draft path.
 
 ## Do this
 
@@ -99,21 +125,22 @@ need adjudication rather than one person's first judgment.
 6. Run the tests, then the report.
 
 ```sh
-python evals/report_draft.py --show-errors 6
-python stages/03_draft/test_stage03.py
+python3 evals/report_draft.py --show-errors 6
+python3 stages/03_draft/test_stage03.py
 ```
 
 ## Check yourself
 
-Expected: all thirteen tests pass. Compliance and focus at 100%, specificity at or above
-55%, and rule-quoted tracking specificity exactly, because a quotation is what it measures.
+Expected: all thirteen tests pass (the first run shows five errors, which block the rest).
+Compliance and focus at 100%, specificity at or above 55%, and rule-quoted equal to
+specificity — both 64.7% — because a quotation is exactly what that check measures.
 
 If compliance fails, search your template for the forbidden list in `checks.py`. The most
 common accident is "immediately", which reads as helpful and is a promise.
 
 ## If you are stuck
 
-**Hint 1.** Read three drafts by hand before writing anything. `python -c` with a single
+**Hint 1.** Read three drafts by hand before writing anything. `python3 -c` with a single
 ticket is enough; the failures are visible in the text.
 
 **Hint 2.** `quotes_rule` compares the normalised first sentence as a substring. If it

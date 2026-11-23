@@ -2,17 +2,17 @@
 """Drafting report.
 
     IMPL=reference python evals/report_draft.py
-    python evals/report_draft.py --show-errors 6
+    python evals/report_draft.py      # works before you have written anything
 
-Four numbers, because a draft can fail in four unrelated ways.
+Four properties, because a draft can fail in four unrelated ways:
 
   specific citation   the draft quoted the section that governs this ticket
   rule quoted         the draft states that section's rule in its own words
   compliance          no promise the policy does not make
   focused             every citation belongs to the ticket's domain
 
-The baseline is a generic "we will look into it" reply. It scores 100% on compliance and
-zero on everything that makes a reply useful, which is the point of measuring separately.
+Plus the escalation count, because "escalate rather than improvise" is a behaviour and
+behaviours need a number.
 """
 
 from __future__ import annotations
@@ -28,9 +28,9 @@ sys.path.insert(0, str(ROOT / IMPL))
 
 from triage.baselines_draft import generic_reply  # noqa: E402
 from triage.checks import compliance_ok, focused, quotes_rule  # noqa: E402
-from triage.compose import draft  # noqa: E402
 from triage.policy import load_policy  # noqa: E402
 from triage.retrieval import PolicyIndex  # noqa: E402
+from triage.stats import mcnemar_exact_p, wilson_interval  # noqa: E402
 from triage.tickets import load_tickets  # noqa: E402
 
 POLICY = ROOT / "evals" / "policy.jsonl"
@@ -48,70 +48,92 @@ def main() -> int:
     dev = [t for t in tickets if t.split == "dev"]
     test = [t for t in tickets if t.split == "test"]
 
-    index = PolicyIndex(sections)
+    try:
+        from triage.compose import draft
+    except NotImplementedError:
+        draft = None
+
+    try:
+        index = PolicyIndex(sections)
+        index.search(dev[0], k=1)
+    except NotImplementedError:
+        print()
+        print(" implementation " + IMPL)
+        print(" retrieval is not implemented yet, so drafting cannot be measured.")
+        print()
+        return 0
 
     def run(drafter, subset):
-        results = []
+        rows = []
         for ticket in subset:
             candidates = [section for section, _ in index.search(ticket, k=3)]
             reply = drafter(ticket, candidates)
             gold = by_id[ticket.gold_section]
-            results.append(
+            rows.append(
                 {
                     "ticket": ticket,
                     "reply": reply,
                     "specific": ticket.gold_section in reply.citations,
                     "quoted": quotes_rule(reply.text, gold),
-                    "violations": compliance_ok(reply.text),
+                    "clean": not compliance_ok(reply.text),
                     "focused": focused(reply.citations, by_id, ticket.intent),
                     "escalated": reply.escalated,
                 }
             )
-        return results
+        return rows
+
+    def line(label, rows):
+        n = len(rows)
+        specific = sum(r["specific"] for r in rows)
+        quoted = sum(r["quoted"] for r in rows)
+        clean = sum(r["clean"] for r in rows)
+        focus = sum(r["focused"] for r in rows)
+        escalated = sum(r["escalated"] for r in rows)
+        low, high = wilson_interval(specific, n)
+        print(
+            f"   {label:<5} specific {specific/n:5.1%} (CI {low:.0%}–{high:.0%})  "
+            f"quoted {quoted/n:5.1%}  compliant {clean/n:5.1%}  focused {focus/n:5.1%}  "
+            f"escalated {escalated}/{n}"
+        )
 
     print()
     print(f" implementation {IMPL}")
     print(f" tickets        {len(tickets)} ({len(dev)} dev, {len(test)} held out)")
+    print(f" note           {len(load_tickets(TICKETS)) - len(tickets)} ticket(s) excluded: "
+          f"gold rule lives in another domain")
     print()
 
-    for name, drafter in (
-        ("baseline (generic reply)", generic_reply),
-        ("cited draft", draft),
-    ):
-        print(f" {name}")
-        for split_name, subset in (("dev", dev), ("test", test)):
-            results = run(drafter, subset)
-            n = len(results)
-            specific = sum(r["specific"] for r in results) / n
-            quoted = sum(r["quoted"] for r in results) / n
-            compliant = sum(not r["violations"] for r in results) / n
-            focus = sum(r["focused"] for r in results) / n
+    print(" baseline (generic reply)")
+    baseline_rows = run(generic_reply, dev)
+    line("dev", baseline_rows)
+    print()
+
+    if draft is None:
+        print(" cited draft\n   not implemented yet\n")
+        return 0
+
+    print(" cited draft")
+    draft_dev = run(draft, dev)
+    line("dev", draft_dev)
+    line("test", run(draft, test))
+    print()
+
+    misses = [r for r in draft_dev if not r["specific"]][: args.show_errors]
+    if misses:
+        print(f" dev misses ({sum(1 for r in draft_dev if not r['specific'])})")
+        for miss in misses:
+            ticket = miss["ticket"]
             print(
-                f"   {split_name:<5} specific {specific:5.1%}  rule quoted {quoted:5.1%}  "
-                f"compliant {compliant:5.1%}  focused {focus:5.1%}"
+                f"   {ticket.id} gold={ticket.gold_section:<3} cited={list(miss['reply'].citations)}  "
+                f"{ticket.message[:44]}"
             )
-            if split_name == "dev" and args.show_errors:
-                misses = [r for r in results if not r["specific"]][: args.show_errors]
-                for miss in misses:
-                    ticket = miss["ticket"]
-                    print(
-                        f"      miss {ticket.id} gold={ticket.gold_section:<3} "
-                        f"cited={list(miss['reply'].citations)}  {ticket.message[:44]}"
-                    )
         print()
 
-    violations = []
-    for ticket in tickets:
-        candidates = [section for section, _ in index.search(ticket, k=3)]
-        reply = draft(ticket, candidates)
-        found = compliance_ok(reply.text)
-        if found:
-            violations.append((ticket.id, found))
-    if violations:
-        print(f" compliance violations: {len(violations)}")
-        for ticket_id, found in violations[:5]:
-            print(f"   {ticket_id} {found}")
-        print()
+    n01 = sum(1 for b, d in zip(baseline_rows, draft_dev) if b["specific"] and not d["specific"])
+    n10 = sum(1 for b, d in zip(baseline_rows, draft_dev) if not b["specific"] and d["specific"])
+    print(" baseline vs draft, paired on dev")
+    print(f"   baseline only {n01}, draft only {n10}, exact McNemar p = {mcnemar_exact_p(n01, n10):.3f}")
+    print()
 
     return 0
 

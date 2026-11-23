@@ -25,9 +25,9 @@ close it and rewrite your version from memory.
 
 | stage | you build | the idea it teaches | ends with |
 | --- | --- | --- | --- |
-| 01 | intent classifier | classification is evidence accumulation, not first match | macro-F1 0.90 on dev, measured on held out |
+| 01 | intent classifier | classification is evidence accumulation, not first match | macro-F1 0.785 baseline → 1.000 reference, both splits |
 | 02 | policy retrieval | a decision needs a citation to the rule it follows | recall@3 100%, coherence 76% |
-| 03 | reply drafting | a draft is a claim, and claims have compliance rules | 100% compliant, 63.5% specific, ceiling 85% |
+| 03 | reply drafting | a draft is a claim, and claims have compliance rules | 100% compliant, 64.7% specific, ceiling 88% |
 | 04 | actions and approval | the model may request; only a human may approve | zero unauthorised actions |
 | 05 | audit trail | if it cannot be replayed, it did not happen | replay reproduces every decision |
 | 06 | trajectory eval | score the process, not only the answer | agreement with a hidden rubric |
@@ -35,15 +35,15 @@ close it and rewrite your version from memory.
 
 ## 3. What you should be able to say after each stage
 
-**After 01:** "Macro-F1 is 0.91 on dev and I report the held-out number separately,
-because a rule set tuned on one split is not a classifier."
+**After 01:** "Macro-F1 went from 0.785 to 1.000, and I report the held-out number
+separately because a rule set tuned on one split is not a classifier."
 
 **After 02:** "Every decision cites a policy passage. The intent I already knew was worth
-nineteen points of recall@3 as a metadata prior, and it never became a hard filter because
+eighteen points of recall@3 as a metadata prior, and it never became a hard filter because
 my classifier is not perfect."
 
-**After 03:** "Compliance and focus are guaranteed in code. Specificity is 63.5% against a
-retrieval ceiling of 85%, so I know the next hour belongs in retrieval, not in templates."
+**After 03:** "Compliance is guaranteed in code. Specificity is 64.7% against a retrieval
+ceiling of 88%, so I know the next hour belongs in retrieval, not in templates."
 
 **After 04:** "Refunds and deletions require approval from outside the model. The model
 asks; the code decides."
@@ -54,8 +54,9 @@ what makes an incident reviewable."
 **After 06:** "Trajectory scoring has a precedence order: safety overrides, outcome
 scores, process penalises, floor at zero."
 
-**After 07:** "A canary on 5% of traffic caught the regression before it reached everyone,
-and the rollback is one config value."
+**After 07:** "A canary on a small share of traffic catches a regression before it reaches
+everyone, and the rollback is one config value." *(Stage 07 is planned; this sentence is the
+target, not a measured result.)*
 
 ## 4. The rules
 
@@ -73,7 +74,7 @@ things; report them separately.
 
 ## 5. When you finish
 
-You will have a support agent that classifies, cites policy, drafts, gates its actions,
-logs every step, scores whole runs, and ships behind a canary. That is the second
-portfolio piece, and it answers the part of the interview that `ragkit` cannot: what
-happens when the system is allowed to *do* something.
+Stages 01 to 03 are complete: classification, policy retrieval, and cited drafting. Stages
+04 to 07 add the approval gate, the audit trail, the trajectory eval, and the canary. When
+they exist, the finished system answers the part of the interview that `ragkit` cannot:
+what happens when the software is allowed to *do* something.

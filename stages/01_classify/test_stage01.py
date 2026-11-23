@@ -88,6 +88,16 @@ class TestClassifier(unittest.TestCase):
             ticket = Ticket(id="x", channel="chat", message=message)
             self.assertEqual(classify(ticket), expected, message)
 
+    def test_weak_synonyms_do_not_outvote_a_specific_phrase(self):
+        # Three overlapping shipping words ("delivery", "deliver", "arrived") used to score
+        # higher than the specific refund phrase "money back". A weak list contributes once.
+        ticket = Ticket(
+            id="x",
+            channel="chat",
+            message="I want my money back, the delivery arrived but the item was broken.",
+        )
+        self.assertEqual(classify(ticket), "refund")
+
     def test_does_not_read_the_answer_key(self):
         ticket = Ticket(id="x", channel="chat", message="Cancel my subscription", intent="other")
         self.assertEqual(classify(ticket), "cancel")

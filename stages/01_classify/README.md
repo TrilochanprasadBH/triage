@@ -1,7 +1,7 @@
 # Stage 01 — Routing tickets to the right intent
 
 ```sh
-python stages/01_classify/test_stage01.py
+python3 stages/01_classify/test_stage01.py
 ```
 
 Eleven tests, six of them failing at first.
@@ -40,8 +40,8 @@ for intent in ("refund", "shipping", "billing", "account", "cancel"):
 That works until a message contains words from two intents. "Please cancel order 8713
 before it ships" contains `cancel` and `ships`. Whichever list you check first wins, so the
 answer is a property of your code's layout, not of the message. In the baseline the
-cancellation class has recall 0.22: eight of nine cancellations are misrouted, almost
-entirely to shipping and billing.
+cancellation class has recall 0.22: seven of nine cancellations are misrouted, three to
+billing and one each to shipping, account, refund and other.
 
 The fix is to stop letting order decide and start accumulating evidence:
 
@@ -62,8 +62,8 @@ contributes one point if *any* of its words appear, because repetition inside a 
 list is not additional evidence.
 
 **Why macro-F1 and not accuracy.** Accuracy hides class-level failure. The baseline in this
-stage has 78.5% accuracy and 0.22 recall on cancellations: it is right most of the time and
-completely broken for one sixth of customers. Macro-F1 averages per-class F1, so a class
+stage scores 0.785 macro-F1 and 80.8% accuracy, with 0.22 recall on cancellations: it is
+right four times in five and completely broken for one sixth of customers. Macro-F1 averages per-class F1, so a class
 that fails counts as much as a class that succeeds.
 
 **Precision and recall, in this context.** For cancellations, recall is the fraction of
@@ -84,10 +84,22 @@ after reading the whole corpus. A rule set you write from the development split 
 land around 0.90 to 0.95, and that is the honest version. The lesson is in the method, not
 in the perfect score.
 
+## Field notes
+
+From `FIELD-NOTES.md`:
+
+- **PostHog's decision models** are the production version of this stage: narrow yes/no
+  classifiers in front of expensive calls, with thresholds set by which error costs more.
+  Their measured advantage was cost and latency, not accuracy; a keyword rule set like this
+  one is the same idea with a different mechanism.
+- **Anthropic's note on workflows versus agents** is the reason this classifier is a plain
+  function rather than a model call. It is deterministic, inspectable, and free. Replace it
+  when it measurably fails, not before.
+
 ## Do this
 
 1. Read `src/triage/classify.py` and the contract in its docstring.
-2. Run `python evals/report.py` to see the baseline and its confusions.
+2. Run `python3 evals/report.py` to see the baseline and its confusions.
 3. Read the development misclassifications. Note which are genuine ambiguity and which are
    rule bugs.
 4. Write `classify` with weighted scoring.
@@ -95,8 +107,8 @@ in the perfect score.
 6. Run the tests. The held-out check is the one you cannot tune.
 
 ```sh
-python evals/report.py --show-errors 8
-python stages/01_classify/test_stage01.py
+python3 evals/report.py --show-errors 8
+python3 stages/01_classify/test_stage01.py
 ```
 
 ## Check yourself
@@ -129,7 +141,7 @@ model, keep the evaluation and the confusion matrix; they are how you justify th
 precision matters: if `other` absorbs 30% of traffic, the pipeline is not routing, it is
 guessing. Track that rate in production.
 
-**Whether 22 held-out tickets is enough.** It is not. The interval on a proportion from 22
-samples is roughly twenty points wide (`ragkit` stage 07 has the arithmetic). A real
-deployment needs hundreds of labelled tickets, and the first month of production traffic is
-how you get them.
+**Whether 22 held-out tickets is enough.** It is not. A proportion from 22 samples at 14
+successes has a 95% interval of 43% to 80% — roughly forty points wide (`ragkit` stage 07
+has the arithmetic). A real deployment needs hundreds of labelled tickets, and the first
+month of production traffic is how you get them.

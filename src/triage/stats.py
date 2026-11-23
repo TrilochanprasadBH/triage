@@ -21,3 +21,17 @@ def wilson_interval(successes: int, n: int, z: float = 1.96) -> tuple[float, flo
     margin = z * math.sqrt((p * (1 - p) / n) + (z * z) / (4 * n * n))
 
     return (max(0.0, (centre - margin) / denominator), min(1.0, (centre + margin) / denominator))
+
+
+def mcnemar_exact_p(n01: int, n10: int) -> float:
+    """Two-sided exact McNemar p-value for paired pass/fail results.
+
+    `n01` is where the first configuration passed and the second failed; `n10` is the
+    reverse. Questions where both agree carry no information about which is better.
+    """
+    discordant = n01 + n10
+    if discordant == 0:
+        return 1.0
+    k = max(n01, n10)
+    tail = sum(math.comb(discordant, i) for i in range(k, discordant + 1)) / (2**discordant)
+    return min(1.0, 2 * tail)
