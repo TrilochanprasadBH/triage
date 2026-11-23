@@ -29,7 +29,7 @@ close it and rewrite your version from memory.
 | 02 | policy retrieval | a decision needs a citation to the rule it follows | recall@3 100%, coherence 76% |
 | 03 | reply drafting | a draft is a claim, and claims have compliance rules | 100% compliant, 64.7% specific, ceiling 88% |
 | 04 | actions and approval | the model may request; only a human may approve | 100% correct proposals, zero unauthorised |
-| 05 | audit trail | if it cannot be replayed, it did not happen | replay reproduces every decision |
+| 05 | audit trail | if it cannot be replayed, it did not happen | 100% complete, 74/74 replay, 0 integrity issues |
 | 06 | trajectory eval | score the process, not only the answer | agreement with a hidden rubric |
 | 07 | release safety | a canary is how a bad prompt is caught on 1% instead of 100% | regression detected in the canary |
 
@@ -49,8 +49,8 @@ ceiling of 88%, so I know the next hour belongs in retrieval, not in templates."
 baseline was 100% safe and 19% correct, which is why safety and quality are separate
 numbers."
 
-**After 05:** "Given a trace id I can replay the run and get the same decision, which is
-what makes an incident reviewable."
+**After 05:** "A record that replays 99% of the time and explains 11% of decisions is a
+log, not an audit trail; my record explains all of them and replays all of them."
 
 **After 06:** "Trajectory scoring has a precedence order: safety overrides, outcome
 scores, process penalises, floor at zero."

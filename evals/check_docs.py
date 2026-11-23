@@ -77,6 +77,19 @@ def main() -> int:
         action_hits += (decision.action or "none") == ticket.gold_action
     action_accuracy = action_hits / action_total
 
+    from triage.actions import World as AuditWorld
+    from triage.trail import record as do_record, replay as do_replay
+
+    audit_total = audit_replay = 0
+    for ticket in tickets:
+        world = AuditWorld()
+        rec = do_record(ticket, world, PolicyIndex(sections))
+        before = world.snapshot()
+        result = do_replay(rec)
+        audit_total += 1
+        audit_replay += result["outcome"] == rec["outcome"] and result["state"] == before
+    replay_fidelity = audit_replay / audit_total
+
     legacy = "legacy"  # guards against the pre-title-weighting figures
     expectations = [
         (f"{baseline_f1:.3f}", ["README.md", "stages/01_classify/README.md"]),
@@ -86,6 +99,7 @@ def main() -> int:
         (f"{draft_dev:.1%}", ["README.md", "stages/03_draft/README.md", "GUIDE.md"]),
         (f"{draft_test:.1%}", ["README.md"]),
         (f"{action_accuracy:.1%}", ["README.md", "stages/04_actions/README.md"]),
+        (f"{audit_replay}/{audit_total}", ["README.md", "stages/05_audit/README.md"]),
     ]
 
     problems = []
@@ -107,6 +121,7 @@ def main() -> int:
     print(f" specific   rule@1 {specific1:.1%}   rule@3 {specific3:.1%}")
     print(f" draft      dev {draft_dev:.1%}   held out {draft_test:.1%}")
     print(f" actions    {action_hits}/{action_total} = {action_accuracy:.1%}")
+    print(f" audit      replay {audit_replay}/{audit_total} = {replay_fidelity:.1%}")
     print(f" problems   {len(problems)}")
     for problem in problems:
         print(f"   {problem}")
