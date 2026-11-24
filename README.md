@@ -4,7 +4,7 @@ A support agent that reads a customer message, routes it to the right policy, dr
 reply, and decides what it is allowed to do without a human.
 
 This repository is a **course and a product at the same time**. You build it in seven
-stages; six are complete. When all seven exist you have a running service with an
+stages; all seven are complete. When all seven exist you have a running service with an
 approval gate, an audit trail, and a trajectory eval that scores whole agent runs rather
 than final answers.
 
@@ -61,7 +61,7 @@ python3 stages/01_classify/test_stage01.py
 | 04 | actions and approval | proposal accuracy, unauthorised actions | **100.0%** proposed, **0** unauthorised |
 | 05 | audit trail | completeness, explainability, replay | **100%**, 100%, 74/74 replay |
 | 06 | trajectory eval | separation, review rate | mean **8.68**, separation **+2.65**, 27/74 reviewed, 0 unsafe |
-| 07 | release safety | canary detection rate | planned |
+| 07 | release safety | canary decisions | regression **-1.68** detected, neutral **+0.72** promoted (truth 0.00) |
 
 Read the stage 01 note before trusting the 1.000. It is an artefact of how the reference
 was written, and the lesson says so. Stage 02's 100% is intent-level recall on a 24-section

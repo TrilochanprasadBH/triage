@@ -31,7 +31,7 @@ close it and rewrite your version from memory.
 | 04 | actions and approval | the model may request; only a human may approve | 100% correct proposals, zero unauthorised |
 | 05 | audit trail | if it cannot be replayed, it did not happen | 100% complete, 74/74 replay, 0 integrity issues |
 | 06 | trajectory eval | score the process, not only the answer | +2.65 separation between good and bad runs |
-| 07 | release safety | a canary is how a bad prompt is caught on 1% instead of 100% | regression detected in the canary |
+| 07 | release safety | a canary is how a bad prompt is caught on a fraction of traffic | regression caught at every share, neutral change promoted |
 
 ## 3. What you should be able to say after each stage
 
@@ -56,9 +56,9 @@ log, not an audit trail; my record explains all of them and replays all of them.
 scorer separates good runs from bad by 2.65 points and flags 36% for review; a constant
 scorer separates by zero."
 
-**After 07:** "A canary on a small share of traffic catches a regression before it reaches
-everyone, and the rollback is one config value." *(Stage 07 is planned; this sentence is the
-target, not a measured result.)*
+**After 07:** "A canary on a tenth of traffic caught a three-point regression, and the same
+rule promoted a neutral change that looked like +0.72 improvement and was actually zero. The
+tolerance is set from the standard error, not from feel."
 
 ## 4. The rules
 
@@ -76,7 +76,6 @@ things; report them separately.
 
 ## 5. When you finish
 
-Stages 01 to 03 are complete: classification, policy retrieval, and cited drafting. Stages
-04 to 07 add the approval gate, the audit trail, the trajectory eval, and the canary. When
-they exist, the finished system answers the part of the interview that `ragkit` cannot:
-what happens when the software is allowed to *do* something.
+All seven stages are complete. The finished system answers the part of the interview that
+`ragkit` cannot: what happens when the software is allowed to *do* something, and how a change
+to it is released without breaking what already worked.

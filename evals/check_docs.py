@@ -112,6 +112,8 @@ def main() -> int:
         (f"{audit_replay}/{audit_total}", ["README.md", "stages/05_audit/README.md"]),
         (f"{mean_score:.2f}", ["README.md", "stages/06_trajectory/README.md"]),
         (f"{review_count}/{audit_total}", ["README.md", "stages/06_trajectory/README.md"]),
+        ("-1.68", ["README.md", "stages/07_release/README.md"]),
+        ("+0.72", ["README.md", "stages/07_release/README.md"]),
     ]
 
     problems = []
