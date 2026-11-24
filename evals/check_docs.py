@@ -90,6 +90,16 @@ def main() -> int:
         audit_replay += result["outcome"] == rec["outcome"] and result["state"] == before
     replay_fidelity = audit_replay / audit_total
 
+    from triage.scoring import score_run
+    from triage.trail import record as score_record
+
+    scores = []
+    for ticket in tickets:
+        rec = score_record(ticket, AuditWorld(), PolicyIndex(sections))
+        scores.append(score_run(rec, ticket).score)
+    mean_score = sum(scores) / len(scores)
+    review_count = sum(1 for s in scores if s < 8)
+
     legacy = "legacy"  # guards against the pre-title-weighting figures
     expectations = [
         (f"{baseline_f1:.3f}", ["README.md", "stages/01_classify/README.md"]),
@@ -100,6 +110,8 @@ def main() -> int:
         (f"{draft_test:.1%}", ["README.md"]),
         (f"{action_accuracy:.1%}", ["README.md", "stages/04_actions/README.md"]),
         (f"{audit_replay}/{audit_total}", ["README.md", "stages/05_audit/README.md"]),
+        (f"{mean_score:.2f}", ["README.md", "stages/06_trajectory/README.md"]),
+        (f"{review_count}/{audit_total}", ["README.md", "stages/06_trajectory/README.md"]),
     ]
 
     problems = []
@@ -122,6 +134,7 @@ def main() -> int:
     print(f" draft      dev {draft_dev:.1%}   held out {draft_test:.1%}")
     print(f" actions    {action_hits}/{action_total} = {action_accuracy:.1%}")
     print(f" audit      replay {audit_replay}/{audit_total} = {replay_fidelity:.1%}")
+    print(f" score      mean {mean_score:.2f}   review {review_count}/{len(tickets)}")
     print(f" problems   {len(problems)}")
     for problem in problems:
         print(f"   {problem}")

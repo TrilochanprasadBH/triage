@@ -30,7 +30,7 @@ close it and rewrite your version from memory.
 | 03 | reply drafting | a draft is a claim, and claims have compliance rules | 100% compliant, 64.7% specific, ceiling 88% |
 | 04 | actions and approval | the model may request; only a human may approve | 100% correct proposals, zero unauthorised |
 | 05 | audit trail | if it cannot be replayed, it did not happen | 100% complete, 74/74 replay, 0 integrity issues |
-| 06 | trajectory eval | score the process, not only the answer | agreement with a hidden rubric |
+| 06 | trajectory eval | score the process, not only the answer | +2.65 separation between good and bad runs |
 | 07 | release safety | a canary is how a bad prompt is caught on 1% instead of 100% | regression detected in the canary |
 
 ## 3. What you should be able to say after each stage
@@ -52,8 +52,9 @@ numbers."
 **After 05:** "A record that replays 99% of the time and explains 11% of decisions is a
 log, not an audit trail; my record explains all of them and replays all of them."
 
-**After 06:** "Trajectory scoring has a precedence order: safety overrides, outcome
-scores, process penalises, floor at zero."
+**After 06:** "Safety overrides, outcome scores, process penalises, floor at zero. My
+scorer separates good runs from bad by 2.65 points and flags 36% for review; a constant
+scorer separates by zero."
 
 **After 07:** "A canary on a small share of traffic catches a regression before it reaches
 everyone, and the rollback is one config value." *(Stage 07 is planned; this sentence is the
