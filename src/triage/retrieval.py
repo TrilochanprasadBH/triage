@@ -14,8 +14,9 @@ from .policy import Section
 from .tickets import Ticket
 
 # The title is the rule's name, so it counts for more than the body. Weighting it in the
-# term frequencies (and in the length) lifts the specific rule to rank 1 from 52.7% to
-# 56.8% on this corpus. See the lesson's measurement table before changing it.
+# term frequencies (and in the length) lifts the specific rule to rank 1 from 54.2% to
+# 58.3% over the 72 tickets with a gold section. See the lesson's measurement table
+# before changing it.
 TITLE_WEIGHT = 3
 INTENT_BOOST = 3.0
 PREFIX_MIN = 5

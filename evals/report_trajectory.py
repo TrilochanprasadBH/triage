@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Trajectory report.
 
-    IMPL=reference python evals/report_trajectory.py
-    python evals/report_trajectory.py
+    IMPL=reference python3 evals/report_trajectory.py
+    python3 evals/report_trajectory.py
 
 The mean score is the least interesting number here. What matters is **separation**: do runs
 the pipeline got right score higher than runs it got wrong? A scorer that returns 7 for

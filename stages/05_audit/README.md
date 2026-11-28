@@ -1,7 +1,7 @@
 # Stage 05 — The audit trail
 
 ```sh
-python stages/05_audit/test_stage05.py
+python3 stages/05_audit/test_stage05.py
 ```
 
 Eleven tests, five failing at first.
@@ -72,6 +72,15 @@ refuses the dangerous action — which is the correct behaviour for an agent dec
 containing an approval came from a human-in-the-loop path, and replay executes it. That is
 how an authorised refund and an unauthorised one can be told apart six months later.
 
+## Field notes
+
+From `FIELD-NOTES.md`:
+
+- **PostHog's year-of-agents learnings** moved their agent to a single loop whose
+  `todo_write` tool restates what remains, because state the system records beats state
+  the model summarises. This stage is the audited version of the same idea: the record, not
+  the model's account of itself, is the source of truth, and replay is what proves it.
+
 ## Do this
 
 1. Read `src/triage/audit.py`: the required fields and the helpers are given.
@@ -80,8 +89,8 @@ how an authorised refund and an unauthorised one can be told apart six months la
 4. Run the tests, then the report.
 
 ```sh
-python evals/report_audit.py --show-errors 4
-python stages/05_audit/test_stage05.py
+python3 evals/report_audit.py --show-errors 4
+python3 stages/05_audit/test_stage05.py
 ```
 
 ## Check yourself

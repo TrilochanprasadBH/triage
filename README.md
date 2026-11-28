@@ -32,7 +32,7 @@ quality.
 ## Requirements
 
 - Python 3.10 or newer
-- No third-party packages for stages 1 to 6
+- No third-party packages; the standard library is enough, all seven stages
 
 ## Quick start
 
@@ -44,9 +44,9 @@ python3 stages/01_classify/test_stage01.py
 
 ## How to work in this repo
 
-- **You write code in `src/triage/`.** Three modules are stubs with contracts
-  (`classify`, `retrieval`, `compose`); everything else is given, including the baselines,
-  the checks, and the metrics.
+- **You write code in `src/triage/`.** Seven modules carry the stubs you implement, one
+  per stage: `classify`, `retrieval`, `compose`, `agent`, `trail`, `scoring`, `release`.
+  Everything else is given, including the baselines, the checks, and the metrics.
 - **`reference/triage/` is a complete implementation.** Read it after you have tried.
 - **`stages/NN_name/` holds the lesson and the tests.** The tests are the specification.
 - `IMPL=reference python3 stages/01_classify/test_stage01.py` checks the reference.

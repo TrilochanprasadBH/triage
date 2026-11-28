@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Show which stages exist, whether the stubs fail, and whether the reference passes.
 
-    python scripts/status.py
+    python3 scripts/status.py
 
 Two columns per stage, because this project ships a learner workspace and an answer:
 

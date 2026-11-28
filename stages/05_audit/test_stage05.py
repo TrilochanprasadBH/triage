@@ -1,7 +1,7 @@
 """Stage 05 tests: recording and replaying.
 
-    python stages/05_audit/test_stage05.py
-    IMPL=reference python stages/05_audit/test_stage05.py
+    python3 stages/05_audit/test_stage05.py
+    IMPL=reference python3 stages/05_audit/test_stage05.py
 """
 
 from __future__ import annotations

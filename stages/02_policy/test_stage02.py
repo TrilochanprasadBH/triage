@@ -1,7 +1,7 @@
 """Stage 02 tests: policy retrieval.
 
-    python stages/02_policy/test_stage02.py
-    IMPL=reference python stages/02_policy/test_stage02.py
+    python3 stages/02_policy/test_stage02.py
+    IMPL=reference python3 stages/02_policy/test_stage02.py
 """
 
 from __future__ import annotations

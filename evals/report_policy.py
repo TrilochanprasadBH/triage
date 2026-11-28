@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Policy retrieval report.
 
-    IMPL=reference python evals/report_policy.py
-    python evals/report_policy.py --show-errors 6
+    IMPL=reference python3 evals/report_policy.py
+    python3 evals/report_policy.py --show-errors 6
 
 Two numbers per configuration.
 

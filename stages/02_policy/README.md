@@ -64,8 +64,8 @@ count, and `average_length` is the corpus mean.
 **Titles count three times.** A section's title is the rule's name: "Duplicate charges",
 "Lost parcels", "Invoice corrections". The title's terms are added to the body's counts
 `TITLE_WEIGHT` times, and the weighted length grows by the same factor. That single change
-lifts the specific rule to rank 1 from 52.7% to 58.3%, which is why stage 03 inherits a
-usable ceiling.
+lifts the specific rule to rank 1 from 54.2% to 58.3% over the 72 comparable tickets, which
+is why stage 03 inherits a usable ceiling.
 
 **Prefix matching.** "Cancel my subscription" failed during development because the policy
 says "cancellation" and the message says "cancel". Those are the same word to a reader and
@@ -125,8 +125,8 @@ reports the exclusion.
 
 From `FIELD-NOTES.md`:
 
-- **Oracle's production RAG guidance** insists retrieval be evaluated separately from
-  generation, and that exact identifiers be tested explicitly. The two recall columns here
+- **Oracle's production RAG evaluation posts** insist retrieval be evaluated separately
+  from generation, and that exact identifiers be tested explicitly. The two recall columns here
   are that instruction: intent recall says the domain was found, specific recall says the
   rule was, and only the second one bounds what stage 03 can quote.
 - **AWS's agentic lens** recommends using hybrid retrieval and metadata filters "where the

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Audit report.
 
-    IMPL=reference python evals/report_audit.py
-    python evals/report_audit.py
+    IMPL=reference python3 evals/report_audit.py
+    python3 evals/report_audit.py
 
 Four numbers:
 

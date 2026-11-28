@@ -1,7 +1,7 @@
 # Stage 07 — Releasing a change safely
 
 ```sh
-python stages/07_release/test_stage07.py
+python3 stages/07_release/test_stage07.py
 ```
 
 Seventeen tests, eleven failing at first.
@@ -74,6 +74,18 @@ as `ragkit` stage 07, arriving from a different direction.
 **Two arms, one release, one decision.** A canary without a rollback path is a dashboard. The
 decision has to be executable: one config value, one deploy, one person who can do it at 3am.
 
+## Field notes
+
+From `FIELD-NOTES.md`:
+
+- **Braintrust's prompt CI/CD pipeline** evaluates each candidate against the current
+  production version on a fixed dataset, blocks release-critical failures on hard
+  thresholds, gives secondary scores tolerance bands, and sets the rollback trigger before
+  rollout begins. Stage 07 is the decision core of that pipeline, offline: assignment,
+  comparison, tolerance from the standard error, one executable decision. Not built:
+  environments, online scoring on live traffic, and the loop that turns production
+  failures into regression cases.
+
 ## Do this
 
 1. Read `src/triage/release.py`.
@@ -84,9 +96,9 @@ decision has to be executable: one config value, one deploy, one person who can 
 6. Run the report at a 20% share, then with `--sweep`.
 
 ```sh
-python evals/report_release.py
-python evals/report_release.py --sweep
-python stages/07_release/test_stage07.py
+python3 evals/report_release.py
+python3 evals/report_release.py --sweep
+python3 stages/07_release/test_stage07.py
 ```
 
 ## Check yourself

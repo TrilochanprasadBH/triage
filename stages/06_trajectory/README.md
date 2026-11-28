@@ -1,7 +1,7 @@
 # Stage 06 — Scoring a whole run
 
 ```sh
-python stages/06_trajectory/test_stage06.py
+python3 stages/06_trajectory/test_stage06.py
 ```
 
 Fourteen tests, six failing at first.
@@ -68,6 +68,15 @@ explicitly per component.
 component contributes 0 and must not appear in the reasons, or the system is punished for a
 labelling constraint.
 
+## Field notes
+
+From `FIELD-NOTES.md`:
+
+- **Anthropic's multi-agent evaluation note** argues a run cannot be graded against a
+  prescribed sequence of steps, because valid runs take different routes; the right frame
+  is a good outcome reached by a reasonable process. This stage's rubric is that frame as
+  code: outcome components first, process penalties second, and no expected path anywhere.
+
 ## Do this
 
 1. Read `src/triage/scoring.py` and the rubric in its docstring.
@@ -78,8 +87,8 @@ labelling constraint.
 6. Run the tests, then the report.
 
 ```sh
-python evals/report_trajectory.py --show-worst 5
-python stages/06_trajectory/test_stage06.py
+python3 evals/report_trajectory.py --show-worst 5
+python3 stages/06_trajectory/test_stage06.py
 ```
 
 ## Check yourself

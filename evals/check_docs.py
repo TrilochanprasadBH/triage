@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail if a documented number no longer matches the code.
 
-    python evals/check_docs.py
+    python3 evals/check_docs.py
 
 This exists because it already happened once: adding title weighting to retrieval changed
 the measured coherence from 75.7% to 73.9%, and three documents kept quoting the old
@@ -53,6 +53,13 @@ def main() -> int:
     specific1 = sum(1 for t in labelled if rule_hit(t, 3, rank1=True)) / len(labelled)
     specific3 = sum(1 for t in labelled if rule_hit(t, 3)) / len(labelled)
 
+    coherent = returned = 0
+    for ticket in tickets:
+        results = index.search(ticket, k=3)
+        coherent += sum(1 for section, _ in results if section.intent == ticket.intent)
+        returned += len(results)
+    coherence = coherent / returned
+
     def draft_rate(subset):
         ok = 0
         for ticket in subset:
@@ -100,12 +107,12 @@ def main() -> int:
     mean_score = sum(scores) / len(scores)
     review_count = sum(1 for s in scores if s < 8)
 
-    legacy = "legacy"  # guards against the pre-title-weighting figures
     expectations = [
         (f"{baseline_f1:.3f}", ["README.md", "stages/01_classify/README.md"]),
         (f"{ours_f1:.3f}", ["README.md"]),
         (f"{specific1:.1%}", ["README.md", "stages/02_policy/README.md"]),
         (f"{specific3:.1%}", ["stages/02_policy/README.md"]),
+        (f"{coherence:.1%}", ["GUIDE.md", "stages/02_policy/README.md"]),
         (f"{draft_dev:.1%}", ["README.md", "stages/03_draft/README.md", "GUIDE.md"]),
         (f"{draft_test:.1%}", ["README.md"]),
         (f"{action_accuracy:.1%}", ["README.md", "stages/04_actions/README.md"]),
@@ -123,16 +130,19 @@ def main() -> int:
             if value not in text:
                 problems.append(f"{relative} does not contain {value}")
 
-    # Numbers that were true before title weighting and must not reappear.
+    # Numbers that were true before title weighting and must not reappear. The scan includes
+    # the retrieval modules, because a comment in code can drift just like a sentence in a
+    # lesson; the stale 56.8% survived in exactly that spot.
     for stale in ("75.7%", "63.5%", "85.1%", "56.8%"):
         for relative in ("README.md", "GUIDE.md", "stages/02_policy/README.md",
-                         "stages/03_draft/README.md"):
+                         "stages/03_draft/README.md", "src/triage/retrieval.py",
+                         "reference/triage/retrieval.py"):
             if stale in (ROOT / relative).read_text(encoding="utf-8"):
                 problems.append(f"{relative} still contains the stale value {stale}")
 
     print()
     print(f" macro-F1   baseline {baseline_f1:.3f}   reference {ours_f1:.3f}")
-    print(f" specific   rule@1 {specific1:.1%}   rule@3 {specific3:.1%}")
+    print(f" specific   rule@1 {specific1:.1%}   rule@3 {specific3:.1%}   coherence {coherence:.1%}")
     print(f" draft      dev {draft_dev:.1%}   held out {draft_test:.1%}")
     print(f" actions    {action_hits}/{action_total} = {action_accuracy:.1%}")
     print(f" audit      replay {audit_replay}/{audit_total} = {replay_fidelity:.1%}")

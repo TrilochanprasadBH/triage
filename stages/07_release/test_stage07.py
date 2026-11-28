@@ -1,7 +1,7 @@
 """Stage 07 tests: canary assignment and the release decision.
 
-    python stages/07_release/test_stage07.py
-    IMPL=reference python stages/07_release/test_stage07.py
+    python3 stages/07_release/test_stage07.py
+    IMPL=reference python3 stages/07_release/test_stage07.py
 """
 
 from __future__ import annotations

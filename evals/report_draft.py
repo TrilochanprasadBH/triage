@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Drafting report.
 
-    IMPL=reference python evals/report_draft.py
-    python evals/report_draft.py      # works before you have written anything
+    IMPL=reference python3 evals/report_draft.py
+    python3 evals/report_draft.py      # works before you have written anything
 
 Four properties, because a draft can fail in four unrelated ways:
 

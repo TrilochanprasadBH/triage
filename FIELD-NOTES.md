@@ -16,7 +16,7 @@ the vendor, and end each entry with the deliberate omission.
 
 **What they did.** Used small calibrated classifiers instead of LLMs for narrow
 questions: up to 444.6x cheaper and 193.6x faster. Gated expensive calls with two yes/no
-questions, which cut false flags to about a tenth of a single compound question; 98.7% of
+questions, which cut false flags to about a tenth of a single question; 98.7% of
 items skipped the LLM entirely. Also used them as model routers. Thresholds were set by
 error cost: 0.4 where a false negative was dangerous, 0.85 where a false positive
 annoyed a user. A failure worth knowing: ranking PR-review findings with a decision model
@@ -53,8 +53,9 @@ propose), rather than a free-running agent.
 
 **Source.** posthog.com/blog/cloud-agents-runtime
 
-**What they did.** Ran agent tasks in sandboxes with network access restricted **at the
-network level**: "a blocked domain stays blocked however nicely the prompt asks".
+**What they did.** Ran agent tasks in sandboxes with the allowlist enforced in the
+network layer on every run: "Once the agent boots, a blocked domain stays blocked down at
+the network level, however nicely the prompt asks."
 
 **What it means.** The strongest guardrail is the one the model cannot negotiate with. A
 prompt instruction is a request; an allowlist in the tool layer is a constraint.
@@ -119,6 +120,48 @@ single-threaded**.
 
 **In this project.** Not built. `scout` is where sub-agents appear, and only for research
 that reads.
+
+### 8. Production RAG evaluation — Oracle developers blog (July 2026)
+
+**Source.** blogs.oracle.com/developers/production-rag-evaluation-keyword-vector-sql-or-hybrid-search
+**What they did.** Two posts on evaluating RAG that runs in production. Their rule is
+"production RAG evaluation separates retrieval quality from answer quality", and their
+takeaway list for retrieval is "test freshness, tenant isolation, metadata filters, exact
+identifiers, citations, and abstention alongside average retrieval metrics" — a high
+average retrieval score "is not enough if the system fails exact identifiers".
+**What it means.** Retrieval has its own failure modes and its own metrics; a single
+blended score hides them. The average is the number that flatters and the exact-identifier
+failure is the one customers hit.
+**In this project.** Stage 02 reports intent recall and specific-rule recall separately
+for exactly this reason: the domain is found every time, the exact rule is at rank 1 only
+58.3% of the time, and only the second number bounds what stage 03 can quote. Not built:
+freshness, tenant isolation, and abstention checks; the escalation path in stage 03 is the
+abstention shape, but no ticket in the corpus exercises it.
+
+---
+
+## Releasing changes
+
+### 9. Prompt CI/CD — Braintrust (September 2026)
+
+**Source.** braintrust.dev/articles/how-to-build-a-prompt-ci-cd-pipeline
+**What they did.** Described a release pipeline for prompt changes: each candidate version
+is evaluated against the current production version on a fixed dataset, with quality,
+latency, and cost measured in the same run. Release-critical scorers have hard thresholds
+that block promotion; secondary scores get tolerance bands. The rollback trigger is set
+before rollout begins, a staged rollout limits initial exposure, and confirmed production
+failures are promoted back into the evaluation dataset as regression cases. They cite
+Notion running regression evaluations before introducing model changes, with 70 engineers
+shipping frontier models within hours.
+**What it means.** A prompt or template change is a release, and the discipline is the
+same as code: a pinned version, a measured comparison against the incumbent, a threshold
+decided in advance, and a path back.
+**In this project.** Stage 07 is the decision core of that pipeline, offline: a stable
+assignment, a control arm, a tolerance derived from the standard error, and one executable
+decision. Not built: environments, online scoring on live traffic, and the
+production-to-dataset feedback loop; each needs infrastructure this repository does not
+ship.
+
 
 ---
 

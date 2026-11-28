@@ -1,7 +1,7 @@
 """Stage 04 tests: actions and the approval gate.
 
-    python stages/04_actions/test_stage04.py
-    IMPL=reference python stages/04_actions/test_stage04.py
+    python3 stages/04_actions/test_stage04.py
+    IMPL=reference python3 stages/04_actions/test_stage04.py
 """
 
 from __future__ import annotations

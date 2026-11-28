@@ -1,7 +1,7 @@
 """Stage 06 tests: scoring a whole run.
 
-    python stages/06_trajectory/test_stage06.py
-    IMPL=reference python stages/06_trajectory/test_stage06.py
+    python3 stages/06_trajectory/test_stage06.py
+    IMPL=reference python3 stages/06_trajectory/test_stage06.py
 """
 
 from __future__ import annotations

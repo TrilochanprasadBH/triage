@@ -1,7 +1,7 @@
 # Stage 04 — Actions and the approval gate
 
 ```sh
-python stages/04_actions/test_stage04.py
+python3 stages/04_actions/test_stage04.py
 ```
 
 Sixteen tests, ten failing at first.
@@ -34,7 +34,7 @@ which is exactly what this stage's baseline demonstrates.
 
 **An approval is a value a human constructs.** In `actions.py`:
 
-```python
+```python3
 @dataclass(frozen=True)
 class Approval:
     by: str
@@ -73,7 +73,7 @@ customer.
 74 tickets, each with a gold action. Fresh world per ticket, so the numbers count what
 actually ran.
 
-| | proposal accuracy | dangerous proposals | approved | unauthorised |
+| | proposal accuracy | dangerous proposals | held for approval | unauthorised |
 | --- | --- | --- | --- | --- |
 | baseline: refund everything | 19.2% (CI 11–32) | 52 | 52/52 | **0** |
 | **yours, dev** | **100.0%** (CI 93–100) | 22 | 22/22 | **0** |
@@ -89,6 +89,19 @@ score perfectly on one while failing the other.**
 
 The paired comparison on dev: baseline only 0, yours only 42, exact McNemar p < 0.001.
 
+## Field notes
+
+From `FIELD-NOTES.md`:
+
+- **PostHog's cloud agents runtime** enforces its sandbox allowlist in the network layer
+  rather than the prompt, because a prompt instruction is a request the model can be talked
+  out of and a network rule is not. The approval gate in this stage is the same move one
+  level up: the registry decides what runs, and no phrasing of the request changes that.
+- **AWS's agentic lens** recommends explicit human-in-the-loop escalation for ambiguous or
+  high-consequence actions, as a designed path rather than an error path. `needs_approval`
+  is that path, and the evaluation in this stage scores it as a success when the action is
+  dangerous.
+
 ## Do this
 
 1. Read `src/triage/actions.py` first. The gate is given and you cannot change it.
@@ -99,8 +112,8 @@ The paired comparison on dev: baseline only 0, yours only 42, exact McNemar p < 
 5. Run the tests, then the report.
 
 ```sh
-python evals/report_actions.py --show-errors 6
-python stages/04_actions/test_stage04.py
+python3 evals/report_actions.py --show-errors 6
+python3 stages/04_actions/test_stage04.py
 ```
 
 ## Check yourself

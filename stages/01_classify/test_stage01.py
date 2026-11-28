@@ -1,7 +1,7 @@
 """Stage 01 tests: ticket classification.
 
-    python stages/01_classify/test_stage01.py
-    IMPL=reference python stages/01_classify/test_stage01.py
+    python3 stages/01_classify/test_stage01.py
+    IMPL=reference python3 stages/01_classify/test_stage01.py
 """
 
 from __future__ import annotations

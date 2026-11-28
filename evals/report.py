@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Classification report.
 
-    IMPL=reference python evals/report.py
-    python evals/report.py            # works before you have written anything
+    IMPL=reference python3 evals/report.py
+    python3 evals/report.py            # works before you have written anything
 
 Prints macro-F1 for the baseline and for your classifier, on both splits, then the
 development errors and the confusion matrix. The baseline section always runs, so the

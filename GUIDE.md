@@ -26,7 +26,7 @@ close it and rewrite your version from memory.
 | stage | you build | the idea it teaches | ends with |
 | --- | --- | --- | --- |
 | 01 | intent classifier | classification is evidence accumulation, not first match | macro-F1 0.785 baseline → 1.000 reference, both splits |
-| 02 | policy retrieval | a decision needs a citation to the rule it follows | recall@3 100%, coherence 76% |
+| 02 | policy retrieval | a decision needs a citation to the rule it follows | recall@3 100%, coherence 73.9% |
 | 03 | reply drafting | a draft is a claim, and claims have compliance rules | 100% compliant, 64.7% specific, ceiling 88% |
 | 04 | actions and approval | the model may request; only a human may approve | 100% correct proposals, zero unauthorised |
 | 05 | audit trail | if it cannot be replayed, it did not happen | 100% complete, 74/74 replay, 0 integrity issues |
@@ -56,9 +56,10 @@ log, not an audit trail; my record explains all of them and replays all of them.
 scorer separates good runs from bad by 2.65 points and flags 36% for review; a constant
 scorer separates by zero."
 
-**After 07:** "A canary on a tenth of traffic caught a three-point regression, and the same
-rule promoted a neutral change that looked like +0.72 improvement and was actually zero. The
-tolerance is set from the standard error, not from feel."
+**After 07:** "A canary on a tenth of traffic caught a regression that costs three points
+per run (measured −1.83 there, −1.91 in the full run), and the same rule promoted a
+neutral change that looked like +0.72 improvement and was actually zero. The tolerance is
+set from the standard error, not from feel."
 
 ## 4. The rules
 

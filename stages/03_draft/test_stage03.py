@@ -1,7 +1,7 @@
 """Stage 03 tests: drafting.
 
-    python stages/03_draft/test_stage03.py
-    IMPL=reference python stages/03_draft/test_stage03.py
+    python3 stages/03_draft/test_stage03.py
+    IMPL=reference python3 stages/03_draft/test_stage03.py
 """
 
 from __future__ import annotations

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Release report.
 
-    IMPL=reference python evals/report_release.py
-    python evals/report_release.py --share 0.2
+    IMPL=reference python3 evals/report_release.py
+    python3 evals/report_release.py --share 0.2
 
 For each candidate release, this scores the whole corpus under the control drafter and under
 the candidate, then asks whether a canary on a fraction of traffic would have caught the
